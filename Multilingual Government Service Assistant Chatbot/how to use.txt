@@ -1,0 +1,5 @@
+1. Click the server.py and make sure the 192.x.x.x code matches the one referred in the code of App.js in folder of YojnaConnect and YojnaConnect chatbot.html
+2. Open the YojnaConnect folder and in address bar press cmd to open command prompt
+3. Type npx expo start there and scan the qr from your expo go app on phone to open the app
+4. Then simply double click the website "YojanaConnect chatbot" in the same folder to open it 
+5. Now, both the app and website are ready to be demonstrated as long as the server is running and in case of app the qr code thing should be active as well for the app to work

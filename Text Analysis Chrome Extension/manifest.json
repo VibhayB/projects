@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Gemini Text Selector",
+  "version": "1.0",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["https://generativelanguage.googleapis.com/*"],
+  "commands": {
+      "open_popup": {
+          "suggested_key": {
+              "default": "Alt+1"
+          },
+          "description": "Open Gemini popup"
+      }
+  },
+  "action": {
+      "default_popup": "popup.html"
+  },
+  "background": {
+      "service_worker": "background.js"
+  }
+}

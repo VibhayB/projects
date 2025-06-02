@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YojnaConnect Chatbot</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; 
+    }
+
+    .container {
+      display: flex;
+      height: 100%;
+    }
+
+.topbar {
+  width: 100%;
+  height: 60px;
+  background-color: #1e293b;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.topbar-left {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.topbar-right select {
+  margin-left: 10px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  background-color: #fff;
+  color: #000;
+}
+.container {
+  display: flex;
+  height: 100%;
+  padding-top: 60px;      
+  box-sizing: border-box; 
+  overflow: hidden;
+}
+
+.chat-item .buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-item button.rename-btn,
+.chat-item button.delete-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.chat-item button.delete-btn img {
+  filter: invert(30%) sepia(99%) saturate(7419%) hue-rotate(354deg) brightness(96%) contrast(112%);
+}
+
+.chat-item button.rename-btn img {
+  width: 16px;
+  height: 16px;
+}
+
+
+    
+.chat-history {
+  width: 250px; 
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0; 
+}
+
+.chat-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+}
+
+
+    .chat-history .create-chat-btn {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    .chat-history .create-chat-btn:hover {
+      background-color: #45a049;
+    }
+
+   .chat-item {
+    width: 220px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #e3e3e3;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden;
+    border: 2px solid transparent; 
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.chat-item.selected {
+    background: #d1f5d1; 
+    border-color: #4caf50;  
+}
+
+
+
+    .chat-item:hover {
+      background-color: #d1d1d1;
+    }
+
+    .chat-item button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .chat-item button img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .chat-container {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      padding: 20px;
+    }
+
+    .chat-box {
+      flex-grow: 1;
+      padding: 10px;
+      overflow-y: auto;
+      border-bottom: 1px solid #ddd;
+      height: 100%;
+    }
+
+    .message {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      max-width: 70%;
+      clear: both;
+    }
+	
+    .user-message {
+      background-color: #d1f7c4;
+      float: right;
+    }
+
+    .bot-message {
+      background-color: #f0f0f0;
+      float: left;
+    }
+
+    .input-container {
+      display: flex;
+      padding: 10px;
+      background-color: #f9f9f9;
+    }
+
+    .input-container input {
+      flex-grow: 1;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      margin-right: 10px;
+    }
+
+    .input-container button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .input-container button:hover {
+      background-color: #45a049;
+    }
+    #chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; 
+}
+
+    select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    } 
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="chat-history">
+  <button class="create-chat-btn" onclick="createNewChat()">Create New Chat</button>
+  <div id="chat-list">
+    <div class="chat-item" onclick="switchChat('Chat 1')">
+      <button onclick="deleteChat('Chat 1'); event.stopPropagation();">
+        <img src="https://img.icons8.com/ios-filled/50/000000/trash.png" alt="Delete">
+      </button>
+    </div>
+  </div>
+</div>
+
+
+    <div class="chat-container">
+      <div class="chat-box" id="chat-box">
+      </div>
+
+      <div class="input-container">
+        <input type="text" id="user-input" placeholder="Type a query..." />
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+<div class="topbar">
+  <div class="topbar-left">YojnaConnect</div>
+  <div class="topbar-right">
+    <select id="state-select" onchange="handleStateChange()">
+    </select>
+  </div>
+</div>
+	
+
+  <script>
+let currentChat = "Chat 1"; 
+let chatHistory = ["Chat 1"]; 
+let chatMessages = { "Chat 1": [{ text: "Welcome to YojnaConnect! You can ask your scheme related queries here and get personalised answers", sender: 'bot' }] };   
+var state = 0;
+function truncateName(name, maxLength = 11) {
+  return name.length > maxLength ? name.slice(0, maxLength) + '...' : name;
+}
+
+function switchChat(chatName) {
+  currentChat = chatName;
+  document.getElementById("chat-box").innerHTML = "";
+  loadChatHistory(chatName); 
+  updateChatList();
+}
+
+function createNewChat() {
+  const newChatName = prompt("Enter new chat name:", `Chat ${chatHistory.length + 1}`);
+  if (newChatName && !chatHistory.includes(newChatName)) {
+    const truncatedName = newChatName.length > 13 ? newChatName.slice(0, 12) + '...' : newChatName;
+    chatHistory.push(truncatedName);
+    chatMessages[truncatedName] = [{ text: `Welcome to YojnaConnect! You can ask your scheme related queries here and get personalised answers`, sender: 'bot' }];
+    updateChatList();
+    switchChat(truncatedName);
+  } else if (!newChatName) {
+    alert("Chat name cannot be empty.");
+  } else {
+    alert("Chat already exists.");
+  }
+}
+
+function renameChat(chatName, event) {
+  event.stopPropagation();
+  const newName = prompt("Enter new name for chat:", chatName);
+  if (newName && !chatHistory.includes(newName)) {
+    const truncatedName = newName.length > 13 ? newName.slice(0, 12) + '...' : newName;
+    const index = chatHistory.indexOf(chatName);
+    if (index !== -1) {
+      chatHistory[index] = truncatedName;
+      if (currentChat === chatName) currentChat = truncatedName;
+      chatMessages[truncatedName] = chatMessages[chatName];
+      delete chatMessages[chatName];
+      updateChatList();
+    }
+  } else {
+    alert("Invalid or duplicate name.");
+  }
+}
+
+function deleteChat(chatName, event) {
+  event.stopPropagation();
+
+  if (confirm(`Are you sure you want to delete "${chatName}"?`)) {
+    if (chatHistory.length > 1) {
+      chatHistory = chatHistory.filter(chat => chat !== chatName);
+      delete chatMessages[chatName]; 
+      updateChatList();
+      if (currentChat === chatName) {
+        switchChat(chatHistory[0]); 
+      }
+    } else {
+      alert("Cannot delete the only chat.");
+    }
+  }
+}
+
+function updateChatList() {
+  const chatList = document.getElementById("chat-list");
+  chatList.innerHTML = "";
+
+  chatHistory.forEach(chat => {
+    const chatItem = document.createElement("div");
+    chatItem.classList.add("chat-item");
+    chatItem.onclick = () => switchChat(chat);
+
+
+    if (chat === currentChat) {
+      chatItem.classList.add("selected");
+    }
+
+    chatItem.innerHTML = `
+      <span class="chat-name">${chat}</span>
+      <div class="buttons">
+        <button class="rename-btn" onclick="renameChat('${chat}', event)">
+          <img src="https://img.icons8.com/ios-filled/16/000000/pencil.png" alt="Rename">
+        </button>
+        <button class="delete-btn" onclick="deleteChat('${chat}', event)">
+          <img src="https://img.icons8.com/ios-glyphs/30/fa314a/trash.png" alt="Delete">
+        </button>
+      </div>
+    `;
+    chatList.appendChild(chatItem);
+  });
+}
+
+
+window.addEventListener('load', () => {
+  updateChatList();
+});
+
+
+function loadChatHistory(chatName) {
+  const chatBox = document.getElementById('chat-box');
+  chatBox.innerHTML = ""; 
+
+  chatMessages[chatName].forEach(msg => {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('message', msg.sender === 'user' ? 'user-message' : 'bot-message');
+    msgDiv.textContent = msg.text;
+    chatBox.appendChild(msgDiv);
+  });
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+document.getElementById('send-btn').addEventListener('click', function() {
+  const userInput = document.getElementById('user-input').value;
+  if (userInput.trim() !== "") {
+    addMessage(userInput, 'user');
+    document.getElementById('user-input').value = '';
+    botResponse(userInput);
+  }
+});
+
+function addMessage(message, sender) {
+  const chatBox = document.getElementById('chat-box');
+  const messageDiv = document.createElement('div');
+  messageDiv.classList.add('message');
+
+  if (sender === 'user') {
+    messageDiv.classList.add('user-message');
+  } else {
+    messageDiv.classList.add('bot-message');
+  }
+
+  // 1. Escape HTML entities to prevent injection
+  let escaped = message
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  // 2. Replace **bold** with <strong>
+  escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  // 3. Handle bullets and line breaks
+  const lines = escaped.split('\n').map(line => {
+    if (line.trim().startsWith('* ')) {
+      return `• ${line.trim().substring(2)}<br>`;
+    } else {
+      return `${line}<br>`;
+    }
+  });
+
+  // 4. Combine processed lines
+  messageDiv.innerHTML = lines.join('');
+
+  // 5. Add to chat box
+  chatBox.appendChild(messageDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  if (!chatMessages[currentChat]) chatMessages[currentChat] = [];
+  chatMessages[currentChat].push({ text: message, sender });
+}
+
+
+async function botResponse(userMessage) {
+    if (!userMessage.trim()) return;
+
+    // Show a temporary "thinking" message
+    const chatBox = document.getElementById('chat-box');
+    const loadingMessageDiv = document.createElement('div');
+    loadingMessageDiv.classList.add('message', 'bot-message');
+    loadingMessageDiv.textContent = "Thinking...";
+    chatBox.appendChild(loadingMessageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Also store the temporary message for history (optional)
+    if (!chatMessages[currentChat]) chatMessages[currentChat] = [];
+    const tempMsgIndex = chatMessages[currentChat].length;
+    chatMessages[currentChat].push({ text: "Thinking...", sender: 'bot' });
+
+    const sendQueryToBackend = async (userQuery) => {
+        try {
+            const res = await fetch('http://192.168.xxx.xxx:5000/query', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    query: userQuery,
+                    state,
+                }),
+            });
+
+            const data = await res.json();
+            return data.response || 'No response received.';
+        } catch (error) {
+            return 'Failed to fetch response.';
+        }
+    };
+
+    const responseText = await sendQueryToBackend(userMessage);
+
+    // Replace "Thinking..." with actual response
+    loadingMessageDiv.textContent = responseText;
+
+    // Update chat history with actual response
+    chatMessages[currentChat][tempMsgIndex].text = responseText;
+}
+
+
+    function updateDropdowns() {
+      dropdown1Index = document.getElementById("dropdown1").selectedIndex;
+      dropdown2Index = document.getElementById("dropdown2").selectedIndex;
+    }
+
+const IndianStates = [
+  'Central', 'Andhra Pradesh', 'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Delhi', 
+    'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu Kashmir', 'Jharkhand', 'Karnataka', 
+    'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Odisha', 
+    'Punjab', 'Rajasthan', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 
+    'West Bengal'
+];
+
+const stateSelect = document.getElementById("state-select");
+IndianStates.forEach(state => {
+  const option = document.createElement("option");
+  option.value = state;
+  option.textContent = state;
+  stateSelect.appendChild(option);
+});
+
+function handleStateChange() {
+  state = stateSelect.selectedIndex;
+}
+
+
+document.getElementById('user-input').addEventListener('keypress', function(event) {
+  if (event.key === 'Enter') {
+    const userInput = document.getElementById('user-input').value;
+    if (userInput.trim() !== "") {
+      addMessage(userInput, 'user');
+      document.getElementById('user-input').value = '';
+      botResponse(userInput);
+    }
+  }
+});
+
+    loadChatHistory(currentChat);
+    updateChatList();
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "name": "yojnaconnect",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-native-picker/picker": "^2.11.0",
+    "axios": "^1.8.4",
+    "expo": "^53.0.9",
+    "expo-status-bar": "^2.2.3",
+    "install": "^0.13.0",
+    "npm": "^11.4.1",
+    "react": "^19.0.0",
+    "react-native": "^0.79.2",
+    "react-native-dialog": "^9.3.0",
+    "react-native-paper": "^5.13.1",
+    "react-native-safe-area-context": "^5.4.0",
+    "react-native-svg": "^15.11.2",
+    "react-native-vector-icons": "^10.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "private": true
+}

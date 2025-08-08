@@ -14,7 +14,6 @@ export default function SuppliesScreen({ navigation }) {
   const [loading,    setLoading]    = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  /* load categories once */
   useEffect(() => {
     (async () => {
       const r = await fetch(`${config.BASE_URL}/supply-categories`);
@@ -22,7 +21,6 @@ export default function SuppliesScreen({ navigation }) {
     })();
   }, []);
 
-  /* load items whenever filter changes */
   const loadItems = useCallback(async () => {
     setLoading(true);
     const url = `${config.BASE_URL}/supplies?cat=${catId}&q=${encodeURIComponent(query)}`;
@@ -31,7 +29,6 @@ export default function SuppliesScreen({ navigation }) {
     setLoading(false);
   }, [catId, query]);
 
-  /* on mount & on filter change */
   useEffect(() => { loadItems(); }, [loadItems]);
 
   const renderItem = ({ item }) => (
@@ -48,7 +45,7 @@ export default function SuppliesScreen({ navigation }) {
   );
 const onRefresh = useCallback(async () => {
   setRefreshing(true);
-  await loadItems(); // reloads data
+  await loadItems(); 
   setRefreshing(false);
 }, [loadItems]);
 
@@ -97,3 +94,4 @@ const styles = StyleSheet.create({
   img:{ width:50, height:50, marginRight:10, borderRadius:6 },
   name:{ fontWeight:'600' }
 });
+

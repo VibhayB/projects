@@ -16,7 +16,7 @@ import config from '../utils/config';
 
 const BookingScreen = ({ route, navigation }) => {
   const { provider } = route.params || {};
-  const [booked, setBooked] = useState(true); // Assume user is here only if booked
+  const [booked, setBooked] = useState(true); 
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showReasonModal, setShowReasonModal] = useState(false);
   const [selectedReasons, setSelectedReasons] = useState([]);
@@ -55,13 +55,13 @@ const fetchLatestBooking = async () => {
     'Too expensive',
     'Others',
   ];
-  // helper: true once 25 % of service duration is past
+  
 const hasQuarterPassed = (b) => {
   if (!b) return false;
   const start   = new Date(`${b.date}T${b.arrivalTime}:00`).getTime();
   const now     = Date.now();
-  const durMin  = parseInt(b.duration || '1', 10) * 60;      // duration in minutes
-  const quarter = start + durMin * 0.25 * 60 * 1000;         // ¼ mark in ms
+  const durMin  = parseInt(b.duration || '1', 10) * 60;    
+  const quarter = start + durMin * 0.25 * 60 * 1000;        
   return now >= quarter;
 };
 
@@ -74,10 +74,9 @@ const hasQuarterPassed = (b) => {
       const response = await fetch(`${config.BASE_URL}/bookings/${id}`);
       const bookings = await response.json();
 
-      // Match booking for this provider
       const thisBooking = bookings.find(b => b.providerId === provider.id);
       if (thisBooking) {
-        setBookingDetails(thisBooking);   // <-- 💾 Booking data loaded here
+        setBookingDetails(thisBooking);   
         setBooked(true);
       } else {
         setBooked(false);
@@ -88,7 +87,7 @@ const hasQuarterPassed = (b) => {
   };
 
   if (provider) {
-    loadBookingDetails();  // <-- 🎯 API call initiated
+    loadBookingDetails();
   }
 }, [provider]);
 
@@ -211,12 +210,11 @@ const hasQuarterPassed = (b) => {
     <Text style={styles.okText}>About Provider</Text>
   </TouchableOpacity>
 
-        {/* === Action button section === */}
         {bookingDetails && !(['request sent','completed','completed rated'].includes(bookingDetails.state)) && (
   <TouchableOpacity
   onPress={() => navigation.navigate('BookingChat', {
     bookingId: bookingDetails.id,
-    sender: 'user', // or 'provider' depending on role
+    sender: 'user',
   })}
   style={[styles.submitBtn, { backgroundColor: '#8e44ad', marginTop: 30 }]}
 >
@@ -227,7 +225,6 @@ const hasQuarterPassed = (b) => {
 
 {booked && bookingDetails && (
   <>
-    {/* Cancel allowed BEFORE ¼-time AND if not yet confirmed */}
     {(
       !(bookingDetails.state == 'double confirmed' && hasQuarterPassed(bookingDetails)) && !(['completed','completed rated'].includes(bookingDetails.state))) && (
       <TouchableOpacity
@@ -253,7 +250,7 @@ const hasQuarterPassed = (b) => {
         style={[styles.submitBtn, { backgroundColor: '#27ae60', marginTop: 30 }]}
         onPress={async () => {
           try {
-            const res = await fetch(`${config.BASE_URL}/mark-done`, {   // create this route
+            const res = await fetch(`${config.BASE_URL}/mark-done`, {  
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ bookingId: bookingDetails.id }),
@@ -279,7 +276,6 @@ const hasQuarterPassed = (b) => {
 
       </ScrollView>
 
-      {/* Cancel Modal */}
             {showCancelModal && (
               <View style={styles.modalOverlay}>
                 <View style={styles.modalBox}>
@@ -300,7 +296,6 @@ const hasQuarterPassed = (b) => {
             
             
 
-            {/* Reason Modal */}
             {showReasonModal && (
               <View style={styles.modalOverlay}>
                 <View style={styles.modalBox}>
@@ -344,7 +339,7 @@ const hasQuarterPassed = (b) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           sessionId,
-          bookingId: bookingDetails?.id,  // <-- 🔥 correct booking doc ID
+          bookingId: bookingDetails?.id,  
           reasons: allReasons,
         }),
       });
@@ -425,7 +420,6 @@ bold: {
   fontWeight: 'bold',
 },
 
-  // Modals
   modalOverlay: {
     position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
     backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center'

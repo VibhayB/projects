@@ -28,7 +28,7 @@ const BookingChatScreen = ({ route }) => {
         body: JSON.stringify({ bookingId, sender, text: newMsg }),
       });
       setNewMsg('');
-      fetchChat(); // re-fetch after send
+      fetchChat(); 
     } catch (err) {
       console.error('Send error:', err);
     }
@@ -36,7 +36,7 @@ const BookingChatScreen = ({ route }) => {
 
   useEffect(() => {
     fetchChat();
-    const timer = setInterval(fetchChat, 4000); // poll every 4s
+    const timer = setInterval(fetchChat, 4000); 
     return () => clearInterval(timer);
   }, []);
 

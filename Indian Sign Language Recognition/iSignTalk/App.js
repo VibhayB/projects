@@ -19,7 +19,6 @@ const MainMenu = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Centralized Section */}
       <View style={styles.contentSection}>
         <Text style={styles.title}>iSignTalk</Text>
         <TouchableOpacity
@@ -42,7 +41,6 @@ const MainMenu = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Submenu */}
       {isSubMenu && (
         <View style={styles.menuContainer}>
           <Text style={styles.menuTitle}>Select an Option</Text>
@@ -86,17 +84,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f9f9f9',
-    justifyContent: 'center', // Center the entire section vertically
-    alignItems: 'center', // Center the entire section horizontally
+    justifyContent: 'center', 
+    alignItems: 'center',
   },
   contentSection: {
-    alignItems: 'center', // Center content inside this section
-    width: '80%', // Optional for better button alignment
+    alignItems: 'center', 
+    width: '80%',
   },
   title: {
     fontSize: 36,
     fontWeight: 'bold',
-    marginBottom: 20, // Space between the title and buttons
+    marginBottom: 20, 
     color: '#333',
     textAlign: 'center',
   },
@@ -105,11 +103,11 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 40,
     borderRadius: 8,
-    marginVertical: 12, // Spacing between buttons
-    width: '100%', // Uniform button width
+    marginVertical: 12, 
+    width: '100%', 
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 5, // Adds shadow
+    elevation: 5, 
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 5,

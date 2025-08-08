@@ -1,4 +1,3 @@
-// QueryScreen.js
 import React, { useEffect, useState, useCallback } from 'react';
 import {
   View, Text, FlatList, TouchableOpacity,
@@ -76,7 +75,6 @@ export default function QueryScreen({ navigation }) {
   );
 }
 
-/* ───────────── styles ───────────── */
 const styles = StyleSheet.create({
   container : { flex: 1, padding: 16 },
   header    : { fontSize: 18, fontWeight: 'bold', marginVertical: 10 },

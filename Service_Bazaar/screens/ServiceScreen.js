@@ -1,4 +1,3 @@
-// ServiceScreen.js
 import React, { useState, useCallback } from 'react';
 import {
   View, Text, Image, StyleSheet,
@@ -12,7 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 export default function ServiceScreen({ route, navigation }) {
   const { booking, providerId } = route.params;
   const [status, setStatus] = useState(booking.state);
-  const [details, setDetails] = useState(booking); // ✅ use this throughout
+  const [details, setDetails] = useState(booking); 
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchLatest = useCallback(async () => {

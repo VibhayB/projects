@@ -13,9 +13,9 @@ DHT dht(DHTPIN, DHTTYPE);
 
 // check difference and update cells
 
-const char* ssid = "WIFI network SSID";     // Your WiFi network SSID
-const char* password = "password"; // Your WiFi network password
-const char* scriptUrl = "https://script.google.com/macros/s/key/exec"; // Replace with your script URL
+const char* ssid = "WIFI network SSID";     //  WiFi network SSID
+const char* password = "password"; //  WiFi network password
+const char* scriptUrl = "https://script.google.com/macros/s/key/exec"; // Replace with script URL
 
 void connectToWiFi();
 

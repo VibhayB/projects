@@ -65,7 +65,7 @@ export default function LoginScreen({ navigation, setIsLoggedIn }) {
       const res = await axios.post(`${config.BASE_URL}/auth/set-password`, {
         email,
         password,
-        otp, // 🔐 used again to confirm legitimacy
+        otp, 
       });
 
       if (res.data.sessionId) {
@@ -209,3 +209,4 @@ const styles = StyleSheet.create({
   },
   button: { marginTop: 10 },
 });
+

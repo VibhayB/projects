@@ -7,25 +7,22 @@ import config from '../utils/config';
 
 
 const ProfileScreen = ({ setIsLoggedIn }) => {
-  const navigation = useNavigation();                            // ★
+  const navigation = useNavigation();                            
   const [sessionId, setSessionId] = useState('');
   const [profile, setProfile]     = useState({ name:'', contact:'', address:'', skills:'' });
   const [editing, setEditing]     = useState(false);
   const [isWorkerApplied, setIsWorkerApplied] = useState(false);
 
-  /* 1️⃣  load sessionId once */
   useEffect(() => {
     AsyncStorage.getItem('sessionId').then(setSessionId);
   }, []);
 
-  /* ----------------------- handlers ----------------------- */
   useEffect(() => {
-    if (!sessionId) return;          // wait until we have it
-
+    if (!sessionId) return;         
     (async () => {
       try {
         const res = await fetch(`${config.BASE_URL}/profile/${sessionId}`);
-        if (!res.ok) return;         // no profile saved yet
+        if (!res.ok) return;        
         const data = await res.json();
         setProfile(data);
       } catch (e) {
@@ -49,7 +46,7 @@ const ProfileScreen = ({ setIsLoggedIn }) => {
   };
   
   const handleApplyWorker = () => {
-    setIsWorkerApplied(true);            // ← local only
+    setIsWorkerApplied(true);           
     Alert.alert('Application Sent', 'Your request to become a worker has been submitted.');
   };
 
@@ -58,7 +55,6 @@ const ProfileScreen = ({ setIsLoggedIn }) => {
     setIsLoggedIn(false);
   };
 
-  /* ----------------------- UI ----------------------- */
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Your Profile</Text>
@@ -94,7 +90,6 @@ const ProfileScreen = ({ setIsLoggedIn }) => {
         </TouchableOpacity>
       )}
 
-      {/* APPLY-AS-WORKER stays exactly as you had it */}
 <TouchableOpacity
   style={[
     styles.applyButton,
@@ -102,7 +97,7 @@ const ProfileScreen = ({ setIsLoggedIn }) => {
   ]}
   onPress={() => {
     if (isWorkerApplied) return;
-    navigation.navigate('WorkerApplication');   // ⬅️ push new screen
+    navigation.navigate('WorkerApplication');   
   }}
   disabled={isWorkerApplied}
 >
@@ -119,7 +114,6 @@ const ProfileScreen = ({ setIsLoggedIn }) => {
   );
 };
 
-/* ---------- styles (unchanged except row/label/value) ---------- */
 const styles = StyleSheet.create({
   container: { flex:1, padding:16 },
   header   : { fontSize:22, fontWeight:'bold', marginBottom:12 },

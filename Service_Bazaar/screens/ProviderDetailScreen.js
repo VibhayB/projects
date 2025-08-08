@@ -30,7 +30,6 @@ const ProviderDetailScreen = ({ route, navigation }) => {
 const [showDatePicker, setShowDatePicker] = useState(false);
 const [showTimePicker, setShowTimePicker] = useState(false);
 
-// Formatting helpers
 const formatDate = d => d.toISOString().split('T')[0];
 const formatTime = d => d.toTimeString().slice(0, 5);
 
@@ -54,7 +53,7 @@ useEffect(() => {
       const response = await fetch(`${config.BASE_URL}/bookings/${sessionId}`);
       const data = await response.json();
 
-      const isBooked = data.some(b => b.providerId === provider.id); // ✅ Corrected
+      const isBooked = data.some(b => b.providerId === provider.id);
       setBooked(isBooked);
     } catch (e) {
       console.error('Error checking booking status:', e);
@@ -71,7 +70,7 @@ useEffect(() => {
   if (booked) {
     navigation.navigate('Booking', {provider});
   } else {
-    setShowBookingDetailsModal(true); // Show custom modal before payment
+    setShowBookingDetailsModal(true); 
   }
 };
 
@@ -122,8 +121,8 @@ const bookingWithDate = {
       description: 'Service Payment',
       image: 'https://your-logo-url.com/logo.png',
       currency: 'INR',
-      key: 'YOUR_RAZORPAY_KEY', //should be on server side instead
-      amount: '50000', // 500.00 INR
+      key: 'YOUR_RAZORPAY_KEY', 
+      amount: '50000',
       name: provider.name,
       prefill: {
         email: 'example@email.com',
@@ -194,7 +193,6 @@ Alert.alert('Payment Success', `${provider.name} has been booked.`);
         />
       </View>
 
-      {/* Comments */}
       <Text style={styles.commentsTitle}>Customer Comments</Text>
       {provider.comments?.length === 0 ? (
         <Text style={styles.noComments}>No comments yet.</Text>
@@ -211,7 +209,6 @@ Alert.alert('Payment Success', `${provider.name} has been booked.`);
         />
       )}
 
-      {/* Payment Modal */}
       {showPaymentModal && (
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
@@ -255,7 +252,6 @@ Alert.alert('Payment Success', `${provider.name} has been booked.`);
     <View style={styles.modalContent}>
       <Text style={styles.modalTitle}>Booking Details</Text>
 
-      {/* Booking Date Picker */}
       <TouchableOpacity
         onPress={() => setShowDatePicker(true)}
         style={styles.input}
@@ -274,7 +270,6 @@ Alert.alert('Payment Success', `${provider.name} has been booked.`);
         />
       )}
 
-      {/* Arrival Time Picker */}
       <TouchableOpacity
         onPress={() => setShowTimePicker(true)}
         style={styles.input}

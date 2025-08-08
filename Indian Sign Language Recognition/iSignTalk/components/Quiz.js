@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Alert } from 'react-native';
-import * as ImagePicker from 'expo-image-picker'; // Expo Image Picker
-import { Video } from 'expo-av'; // Expo AV for video playback
+import * as ImagePicker from 'expo-image-picker'; 
+import { Video } from 'expo-av';
 import axios from 'axios';
 
-const signs = ["good morning", "alright", "good afternoon", "how are you", "hello"]; // Predefined signs
+const signs = ["good morning", "alright", "good afternoon", "how are you", "hello"]; 
 
 const Quiz = ({ navigation }) => {
   const [currentSign, setCurrentSign] = useState(null);
@@ -14,7 +14,6 @@ const Quiz = ({ navigation }) => {
   const [usedSigns, setUsedSigns] = useState([]);
   const [hasGalleryPermission, setHasGalleryPermission] = useState(false);
 
-  // Get random sign from the remaining list of signs
   const getRandomSign = () => {
     const remainingSigns = signs.filter(sign => !usedSigns.includes(sign));
     if (remainingSigns.length === 0) {
@@ -34,10 +33,9 @@ const Quiz = ({ navigation }) => {
     };
   
     requestGalleryPermission();
-    setCurrentSign(getRandomSign()); // Set the first sign to perform
+    setCurrentSign(getRandomSign()); 
   }, []);
 
-  // Handle video picking
   const pickVideo = async () => {
     if (!hasGalleryPermission) {
       Alert.alert('Permission Required', 'Please grant permission to access the gallery.');
@@ -46,12 +44,12 @@ const Quiz = ({ navigation }) => {
 
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Videos, // Only allow video files
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos, 
         quality: 1,
       });
 
       if (!result.canceled) {
-        setVideoUri(result.assets[0].uri); // Set the video URI after picking the video
+        setVideoUri(result.assets[0].uri); 
       } else {
         Alert.alert('No video selected');
       }
@@ -61,7 +59,6 @@ const Quiz = ({ navigation }) => {
     }
   };
 
-  // Handle video upload and validation
   const handleUploadVideo = async () => {
     if (!videoUri) {
       Alert.alert('No video', 'Please select a video.');
@@ -83,7 +80,7 @@ const Quiz = ({ navigation }) => {
 
       if (response.data && response.data.predicted_sign) {
         const predictedSign = response.data.predicted_sign;
-        setIsCorrect(predictedSign === currentSign); // Check if the predicted sign matches
+        setIsCorrect(predictedSign === currentSign);
       } else {
         Alert.alert('Error', 'Unexpected server response.');
       }
@@ -94,8 +91,7 @@ const Quiz = ({ navigation }) => {
       setLoading(false);
     }
   };
-
-  // Handle proceeding to next sign after checking the current one
+  
   const handleNextSign = () => {
     setIsCorrect(null);
     setVideoUri(null);
@@ -106,12 +102,10 @@ const Quiz = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Practise Signs</Text>
 
-      {/* Display current sign to perform */}
       {currentSign && (
         <Text style={styles.quizText}>Please perform the sign for: <Text style={styles.highlightText}>{currentSign}</Text></Text>
       )}
 
-      {/* Display video preview if a video is selected */}
       {videoUri ? (
         <Video
           source={{ uri: videoUri }}
@@ -128,7 +122,6 @@ const Quiz = ({ navigation }) => {
         </View>
       )}
 
-      {/* Submit button to check if the video matches */}
       <TouchableOpacity style={styles.button} onPress={handleUploadVideo}>
         <Text style={styles.buttonText}>Submit for Check</Text>
       </TouchableOpacity>
@@ -143,7 +136,6 @@ const Quiz = ({ navigation }) => {
         <Text style={styles.resultText}>Upload a video to check your answer.</Text>
       )}
 
-      {/* Button to move to next sign */}
       {isCorrect !== null && (
         <TouchableOpacity style={styles.nextButton} onPress={handleNextSign}>
           <Text style={styles.nextButtonText}>Next Sign</Text>
@@ -159,7 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#f9f9f9', // Light background for better readability
+    backgroundColor: '#f9f9f9', 
   },
   title: {
     fontSize: 28,
@@ -199,9 +191,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 15,
     marginHorizontal: 10,
-    minWidth: 200, // Ensure buttons have consistent width
+    minWidth: 200, 
     alignItems: 'center',
-    elevation: 4, // Shadow for depth
+    elevation: 4, 
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 4,

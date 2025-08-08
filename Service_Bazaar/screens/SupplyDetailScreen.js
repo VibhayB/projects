@@ -4,11 +4,11 @@ import {
   TextInput, Alert, ActivityIndicator
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import RazorpayCheckout from 'react-native-razorpay';   // npm i react-native-razorpay
+import RazorpayCheckout from 'react-native-razorpay';   
 import config from '../utils/config';
 
 export default function SupplyDetail({ route, navigation }) {
-  const { item } = route.params;              // passed from list
+  const { item } = route.params;              
   const [qty, setQty]        = useState('1');
   const [loading, setLoading]= useState(false);
 
@@ -20,7 +20,6 @@ export default function SupplyDetail({ route, navigation }) {
     Alert.alert('Added', 'Item saved to cart.');
   };
 
-  /** hit POST /order-supply */
   const sendOrder = async (paymentMode, razorId = null) => {
     const sessionId = await AsyncStorage.getItem('sessionId');
     const body = {
@@ -44,10 +43,8 @@ export default function SupplyDetail({ route, navigation }) {
     }
   };
 
-  /** Cash after service */
   const buyCash = () => sendOrder('cash');
 
-  /** Pay now with Razorpay */
   const buyRazor = async () => {
     try {
       setLoading(true);
@@ -55,12 +52,12 @@ export default function SupplyDetail({ route, navigation }) {
         description: 'Supply purchase',
         currency   : 'INR',
         key        : '<YOUR_RAZORPAY_KEY>',
-        amount     : item.price * (parseInt(qty, 10) || 1) * 100, // paise
+        amount     : item.price * (parseInt(qty, 10) || 1) * 100,
         name       : item.name,
         prefill    : {},
       };
       const data = await RazorpayCheckout.open(options);
-      // data.razorpay_payment_id
+      
       await sendOrder('razorpay', data.razorpay_payment_id);
     } catch (err) {
       if (err?.description !== 'Payment cancelled') {
@@ -111,3 +108,4 @@ const styles = StyleSheet.create({
               width:'80%', alignItems:'center', marginBottom:10 },
   btnTxt   :{ color:'#fff', fontWeight:'bold' }
 });
+

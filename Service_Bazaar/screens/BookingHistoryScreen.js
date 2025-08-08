@@ -65,7 +65,7 @@ export default function BookingHistoryScreen() {
   }, [sessionId, selectedPid]);
   const onRefresh = async () => {
   setRefreshing(true);
-  await loadList(); // or whatever fetch function
+  await loadList(); 
   setRefreshing(false);
 };
   useFocusEffect(
@@ -87,17 +87,13 @@ export default function BookingHistoryScreen() {
       <Text>Payment: {item.payment}</Text>
     </View>
 
-    {/* single, unified View button */}
     <TouchableOpacity
       style={[styles.btn, { backgroundColor: '#2ecc71' }]}
       onPress={async () => {
         if (!selectedPid) {
-          /* ── USER MODE ───────────────────────── */
           const provider = await fetchProviderById(item.providerId);
           nav.navigate('Booking', { provider });
         } else {
-          /* ── PROVIDER MODE ───────────────────── */
-          // Pass the booking doc + the providerId you’re logged in as
           nav.navigate('ServiceScreen', {
             booking   : item,
             providerId: selectedPid,

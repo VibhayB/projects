@@ -10,7 +10,7 @@ import config from '../utils/config';
 export default function ProvidersScreen({ route, navigation }) {
   const { serviceId, title } = route.params;
 
-  const [coords, setCoords] = useState(null); // { lat, lng }
+  const [coords, setCoords] = useState(null); 
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(false);
   const mapRef = useRef();
@@ -23,7 +23,6 @@ export default function ProvidersScreen({ route, navigation }) {
       const data = await res.json();
       setProviders(data);
 
-      // Send pins to map
       mapRef.current?.injectJavaScript(`renderPins(${JSON.stringify(
         data.map(p => ({
           id: p.id,

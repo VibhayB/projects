@@ -399,16 +399,16 @@ function addMessage(message, sender) {
     messageDiv.classList.add('bot-message');
   }
 
-  // 1. Escape HTML entities to prevent injection
+	
   let escaped = message
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 
-  // 2. Replace **bold** with <strong>
+	
   escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
-  // 3. Handle bullets and line breaks
+	
   const lines = escaped.split('\n').map(line => {
     if (line.trim().startsWith('* ')) {
       return `• ${line.trim().substring(2)}<br>`;
@@ -417,10 +417,10 @@ function addMessage(message, sender) {
     }
   });
 
-  // 4. Combine processed lines
+	
   messageDiv.innerHTML = lines.join('');
 
-  // 5. Add to chat box
+	
   chatBox.appendChild(messageDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -432,7 +432,7 @@ function addMessage(message, sender) {
 async function botResponse(userMessage) {
     if (!userMessage.trim()) return;
 
-    // Show a temporary "thinking" message
+	
     const chatBox = document.getElementById('chat-box');
     const loadingMessageDiv = document.createElement('div');
     loadingMessageDiv.classList.add('message', 'bot-message');
@@ -440,7 +440,7 @@ async function botResponse(userMessage) {
     chatBox.appendChild(loadingMessageDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    // Also store the temporary message for history (optional)
+	
     if (!chatMessages[currentChat]) chatMessages[currentChat] = [];
     const tempMsgIndex = chatMessages[currentChat].length;
     chatMessages[currentChat].push({ text: "Thinking...", sender: 'bot' });
@@ -465,10 +465,10 @@ async function botResponse(userMessage) {
 
     const responseText = await sendQueryToBackend(userMessage);
 
-    // Replace "Thinking..." with actual response
+	
     loadingMessageDiv.textContent = responseText;
 
-    // Update chat history with actual response
+	
     chatMessages[currentChat][tempMsgIndex].text = responseText;
 }
 

@@ -1,4 +1,3 @@
-// App.js (or index.js) – updated
 import React, { useEffect, useState } from 'react';
 import {
   View, Text, StyleSheet, TextInput, TouchableOpacity, Alert,
@@ -25,7 +24,7 @@ import ServiceScreen            from './screens/ServiceScreen';
 import BookingChatScreen        from './screens/BookingChatScreen';
 import SuppliesScreen           from './screens/SuppliesScreen';
 import SupplyDetailScreen       from './screens/SupplyDetailScreen';
-import ProviderStatsScreen       from './screens/ProviderStatsScreen'; // NEW
+import ProviderStatsScreen       from './screens/ProviderStatsScreen'; 
 
 const Stack = createStackNavigator();
 const Tab   = createBottomTabNavigator();
@@ -199,7 +198,6 @@ export default function App() {
           }
         }}
         onSkip={async () => {
-             /* ➜ tell the server we are done with that booking */
    try {
      await fetch(`${config.BASE_URL}/rate-booking`, {
        method : 'POST',
@@ -207,7 +205,7 @@ export default function App() {
        body   : JSON.stringify({
          bookingId : currentRating.id,
          providerId: currentRating.providerId,
-         rating    : 0,          // no stars, but still mark as rated
+         rating    : 0,        
          comment   : '',
          anonymous : true,
        }),

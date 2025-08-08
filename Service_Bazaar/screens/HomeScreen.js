@@ -11,7 +11,7 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch(`${config.BASE_URL}/services`); // replace <YOUR_SERVER_IP> with real IP or domain
+        const response = await fetch(`${config.BASE_URL}/services`); 
         const data = await response.json();
         setServices(data);
       } catch (error) {

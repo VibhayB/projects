@@ -9,7 +9,6 @@ const SearchSignMenu = () => {
   const [loading, setLoading] = useState(false);
   const [predictedSign, setPredictedSign] = useState(null);
 
-  // Request gallery permissions on mount
   useEffect(() => {
     const requestGalleryPermission = async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -20,17 +19,16 @@ const SearchSignMenu = () => {
     requestGalleryPermission();
   }, []);
 
-  // Pick video from gallery
   const pickVideo = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Videos, // Ensure only videos are picked
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos, 
         quality: 1,
       });
 
       if (!result.canceled) {
-        const videoAsset = result.assets[0]; // Use the first asset in the array
-        console.log('Selected video URI:', videoAsset.uri); // Debug the URI
+        const videoAsset = result.assets[0]; 
+        console.log('Selected video URI:', videoAsset.uri);
         setVideoUri(videoAsset.uri);
       } else {
         alert('No video selected.');
@@ -40,7 +38,6 @@ const SearchSignMenu = () => {
     }
   };
 
-  // Handle video upload
   const handleUploadVideo = async () => {
     if (!videoUri) {
       alert('Please select a video first!');
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f0f0f5', // Soft background color
+    backgroundColor: '#f0f0f5', 
     padding: 20,
   },
   title: {
@@ -126,7 +123,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 300,
     marginBottom: 20,
-    borderRadius: 10, // Rounded corners for the video preview
+    borderRadius: 10, 
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#ddd',
@@ -140,7 +137,7 @@ const styles = StyleSheet.create({
     width: '80%',
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 5, // Shadow for depth
+    elevation: 5, 
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 5,

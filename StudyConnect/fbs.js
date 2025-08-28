@@ -97,4 +97,5 @@ window.loadCollectionData = async function(collectionName) {
     console.error('Error loading', error);
     return [];
   }
+
 }; 

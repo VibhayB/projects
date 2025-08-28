@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGPA Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #4a90e2;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      font-size: 1.2em;
+      margin-right: 10px;
+    }
+    select {
+      font-size: 1em;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #fff;
+      color: #333;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    select:focus {
+      border-color: #4a90e2;
+      box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+      outline: none;
+    }
+    form {
+      margin: 20px auto;
+      width: 90%;
+      max-width: 900px;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      transition: box-shadow 0.3s;
+    }
+    form:hover {
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+    }
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #4a90e2;
+      color: #fff;
+      font-size: 1.1em;
+    }
+    td input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 1em;
+    }
+button {
+  font-size: 1.1em;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4a90e2;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  margin-right: 20px; 
+}
+    button:hover {
+      background-color: #357ABD;
+      transform: scale(1.05);
+    }
+    button:focus {
+      outline: none;
+    }
+    .result-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+
+p#result {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #4a90e2;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+  </style>
+</head>
+<body>
+
+  <div>
+    <h1>SGPA Calculator</h1>
+
+    <label for="semester">Select Semester:</label>
+    <select id="semester" onchange="populateSubjects()">
+    </select>
+
+    <form id="sgpaCalculator">
+      <table id="subjectsTable">
+        <tr>
+          <th>Subject</th>
+          <th>Credits</th>
+          <th>Total Marks</th>
+          <th>Grade</th>
+        </tr>
+      </table>
+
+      <div class="result-container">
+        <button type="button" onclick="calculateSGPA()">Calculate SGPA</button>
+        <p id="result"></p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const storedSemesters = localStorage.getItem("semesters");
+    const semesters = storedSemesters ? JSON.parse(storedSemesters) : {};
+
+    function populateSemesterOptions() {
+      const semesterSelect = document.getElementById("semester");
+      semesterSelect.innerHTML = ''; 
+
+      for (const [semester, subjects] of Object.entries(semesters)) {
+        const option = document.createElement("option");
+        option.value = semester;
+        option.textContent = `Semester ${semester}`;
+        semesterSelect.appendChild(option);
+      }
+
+      if (semesterSelect.options.length > 0) {
+        semesterSelect.value = semesterSelect.options[0].value;
+        populateSubjects();
+      }
+    }
+
+    function populateSubjects() {
+      const semester = document.getElementById("semester").value;
+      const subjects = semesters[semester];
+
+      const table = document.getElementById("subjectsTable");
+      table.innerHTML = `
+        <tr>
+          <th>Subject</th>
+          <th>Credits</th>
+          <th>Total Marks</th>
+          <th>Grade</th>
+        </tr>
+      `;
+
+      subjects.forEach((subject, index) => {
+        const row = table.insertRow();
+        row.innerHTML = `
+          <td>${subject.name} (${subject.maxMarks} marks)</td>
+          <td>${subject.credits}</td>
+          <td><input type="number" id="subject${index + 1}" placeholder="Enter marks" min="0" max="${subject.maxMarks}"></td>
+          <td id="grade${index + 1}"></td>
+        `;
+      });
+    }
+
+    function calculateSGPA() {
+      const semester = document.getElementById("semester").value;
+      const subjects = semesters[semester];
+      const maxMarks = subjects.map(subject => subject.maxMarks);
+      const credits = subjects.map(subject => subject.credits);
+
+      const marks = subjects.map((_, index) => {
+        const value = document.getElementById(`subject${index + 1}`).value.trim();
+        return value !== '' ? parseFloat(value) : null;
+      });
+
+      const gradePoints = {
+        'O': 10,
+        'A+': 9,
+        'A': 8,
+        'B+': 7,
+        'B': 6,
+        'C': 5,
+        'P': 4,
+        'F': 0,
+        'X': 0 
+      };
+
+      const resultTable = document.getElementById('subjectsTable').getElementsByTagName('tr');
+      let totalGradePoints = 0;
+
+      for (let i = 1; i < resultTable.length; i++) {
+        const markInput = resultTable[i].getElementsByTagName('input')[0];
+        const gradeCell = resultTable[i].getElementsByTagName('td')[3];
+
+        const enteredMark = marks[i - 1];
+        const subjectMaxMarks = maxMarks[i - 1];
+        
+        const percentage = enteredMark !== null ? (enteredMark / subjectMaxMarks) * 100 : 0;
+        const grade = getGrade(percentage);
+        const gradePoint = gradePoints[grade];
+
+        totalGradePoints += gradePoint * credits[i - 1];
+        gradeCell.innerText = grade;
+      }
+
+      const totalCredits = credits.reduce((a, b) => a + b, 0);
+      const sgpa = totalGradePoints / totalCredits;
+
+      document.getElementById('result').innerText = `Your SGPA is: ${sgpa.toFixed(2)}`;
+    }
+
+    function getGrade(percentage) {
+      if (percentage >= 85) return 'O';
+      if (percentage >= 75) return 'A+';
+      if (percentage >= 60) return 'A';
+      if (percentage >= 55) return 'B+';
+      if (percentage >= 50) return 'B';
+      if (percentage >= 45) return 'C';
+      if (percentage >= 40) return 'P';
+      return 'F';
+    }
+
+    window.onload = () => {
+      populateSemesterOptions();
+    };
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .grid-container {
+            display: grid;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .tile {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #776e65;
+        }
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .scoreboard div {
+            font-size: 18px;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        .controls button {
+            font-size: 18px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">2048</h1>
+        <div class="scoreboard">
+            <div>Score: <span id="score">0</span></div>
+            <div>Max Score: <span id="max-score">0</span></div>
+            <div>Time: <span id="time">0</span>s</div>
+        </div>
+        <div>
+            <label for="grid-size">Grid Size:</label>
+            <select id="grid-size" onchange="startGame()">
+                <option value="3">3x3</option>
+                <option value="4" selected>4x4</option>
+                <option value="5">5x5</option>
+                <option value="7">7x7</option>
+            </select>
+        </div>
+        <div id="grid-container" class="grid-container"></div>
+        <div class="controls">
+            <button onclick="move('up')">Up</button>
+            <button onclick="move('left')">Left</button>
+            <button onclick="move('down')">Down</button>
+            <button onclick="move('right')">Right</button>
+        </div>
+        <p class="instructions">Use arrow keys or buttons to move tiles. Combine tiles to reach 2048!</p>
+    </div>
+    <script>
+        let gridSize = 4;
+        let grid = [];
+        let score = 0;
+        let maxScore = 0;
+        let timer;
+        let timeElapsed = 0;
+
+        function initGrid() {
+            grid = Array.from({ length: gridSize }, () => Array.from({ length: gridSize }, () => 0));
+        }
+
+        function addRandomTile() {
+            const availableSpots = [];
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = 0; j < gridSize; j++) {
+                    if (grid[i][j] === 0) {
+                        availableSpots.push({ x: i, y: j });
+                    }
+                }
+            }
+
+            if (availableSpots.length > 0) {
+                const { x, y } = availableSpots[Math.floor(Math.random() * availableSpots.length)];
+                grid[x][y] = Math.random() < 0.9 ? 2 : 4; 
+            }
+        }
+
+        function startGame() {
+            gridSize = parseInt(document.getElementById('grid-size').value);
+            score = 0;
+            timeElapsed = 0;
+            clearInterval(timer);
+            timer = setInterval(updateTime, 1000);
+            initGrid();
+            addRandomTile();
+            addRandomTile();
+            updateGrid();
+            updateScore();
+        }
+
+        function updateGrid() {
+            const gridContainer = document.getElementById('grid-container');
+            gridContainer.innerHTML = '';
+            gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 80px)`;
+
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = 0; j < gridSize; j++) {
+                    const tile = document.createElement('div');
+                    tile.classList.add('tile');
+                    tile.textContent = grid[i][j] === 0 ? '' : grid[i][j];
+                    tile.style.backgroundColor = getTileColor(grid[i][j]);
+                    gridContainer.appendChild(tile);
+                }
+            }
+        }
+
+        function getTileColor(value) {
+            switch (value) {
+                case 2: return '#eee4da';
+                case 4: return '#ede0c8';
+                case 8: return '#f2b179';
+                case 16: return '#f59563';
+                case 32: return '#f67c5f';
+                case 64: return '#f65e3b';
+                case 128: return '#edcf72';
+                case 256: return '#edcc61';
+                case 512: return '#9c0';
+                case 1024: return '#33b5e5';
+                case 2048: return '#09c';
+                default: return '#ccc0b3';
+            }
+        }
+
+        function move(direction) {
+            let moved = false;
+
+            switch (direction) {
+                case 'left':
+                    for (let i = 0; i < gridSize; i++) {
+                        for (let j = 1; j < gridSize; j++) {
+                            if (grid[i][j] !== 0) {
+                                let k = j;
+                                while (k > 0 && grid[i][k - 1] === 0) {
+                                    k--;
+                                }
+                                if (k !== j) {
+                                    grid[i][k] = grid[i][j];
+                                    grid[i][j] = 0;
+                                    moved = true;
+                                }
+                                if (k > 0 && grid[i][k - 1] === grid[i][k]) {
+                                    grid[i][k - 1] *= 2;
+                                    score += grid[i][k - 1];
+                                    grid[i][k] = 0;
+                                    moved = true;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'right':
+                    for (let i = 0; i < gridSize; i++) {
+                        for (let j = gridSize - 2; j >= 0; j--) {
+                            if (grid[i][j] !== 0) {
+                                let k = j;
+                                while (k < gridSize - 1 && grid[i][k + 1] === 0) {
+                                    k++;
+                                }
+                                if (k !== j) {
+                                    grid[i][k] = grid[i][j];
+                                    grid[i][j] = 0;
+                                    moved = true;
+                                }
+                                if (k < gridSize - 1 && grid[i][k + 1] === grid[i][k]) {
+                                    grid[i][k + 1] *= 2;
+                                    score += grid[i][k + 1];
+                                    grid[i][k] = 0;
+                                    moved = true;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'up':
+                    for (let j = 0; j < gridSize; j++) {
+                        for (let i = 1; i < gridSize; i++) {
+                            if (grid[i][j] !== 0) {
+                                let k = i;
+                                while (k > 0 && grid[k - 1][j] === 0) {
+                                    k--;
+                                }
+                                if (k !== i) {
+                                    grid[k][j] = grid[i][j];
+                                    grid[i][j] = 0;
+                                    moved = true;
+                                }
+                                if (k > 0 && grid[k - 1][j] === grid[k][j]) {
+                                    grid[k - 1][j] *= 2;
+                                    score += grid[k - 1][j];
+                                    grid[k][j] = 0;
+                                    moved = true;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'down':
+                    for (let j = 0; j < gridSize; j++) {
+                        for (let i = gridSize - 2; i >= 0; i--) {
+                            if (grid[i][j] !== 0) {
+                                let k = i;
+                                while (k < gridSize - 1 && grid[k + 1][j] === 0) {
+                                    k++;
+                                }
+                                if (k !== i) {
+                                    grid[k][j] = grid[i][j];
+                                    grid[i][j] = 0;
+                                    moved = true;
+                                }
+                               
+                                if (k < gridSize - 1 && grid[k + 1][j] === grid[k][j]) {
+                                    grid[k + 1][j] *= 2;
+                                    score += grid[k + 1][j];
+                                    grid[i][j] = 0;
+                                    moved = true;
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+
+            if (moved) {
+                addRandomTile();
+                updateGrid();
+                updateScore();
+                checkGameOver();
+            }
+        }
+
+        function checkGameOver() {
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = 0; j < gridSize; j++) {
+                    if (grid[i][j] === 0) {
+                        return false;
+                    }
+                    if (i < gridSize - 1 && grid[i][j] === grid[i + 1][j]) {
+                        return false;
+                    }
+                    if (j < gridSize - 1 && grid[i][j] === grid[i][j + 1]) {
+                        return false;
+                    }
+                }
+            }
+            alert(`Game Over! Your score: ${score}`);
+            clearInterval(timer);
+            return true;
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            if (score > maxScore) {
+                maxScore = score;
+                document.getElementById('max-score').textContent = maxScore;
+            }
+        }
+
+        function updateTime() {
+            timeElapsed++;
+            document.getElementById('time').textContent = timeElapsed;
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (!checkGameOver()) {
+                switch(event.key) {
+                    case "ArrowLeft":
+                        move('left');
+                        break;
+                    case "ArrowRight":
+                        move('right');
+                        break;
+                    case "ArrowUp":
+                        move('up');
+                        break;
+                    case "ArrowDown":
+                        move('down');
+                        break;
+                }
+            }
+        });
+
+        startGame();
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CGPA Updater</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .calculator-container {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .calculator-container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+    input {
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+    }
+    button {
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+    #result:not(:empty) {
+      transition: color 0.3s ease, transform 0.2s ease;
+      color: #16a34a;
+      transform: scale(1.05);
+    }
+    #excel-icon {
+      transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+    #excel-icon:hover {
+      transform: scale(1.1);
+      background-color: #e5e7eb;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: linear-gradient(90deg, #2563eb, #3b82f6);
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans flex items-center justify-center p-4 sm:p-6">
+  <div id="calculator" class="calculator-container bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-lg w-full max-w-md">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-6 relative">CGPA Calculator</h2>
+
+    <label for="cgpa5" class="block text-base sm:text-lg font-medium text-gray-700 mb-2">CGPA up to Semester 5:</label>
+    <input id="cgpa5" type="number" step="0.01" min="0" max="10" class="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 mb-4">
+
+    <label for="sgpa6" class="block text-base sm:text-lg font-medium text-gray-700 mb-2">SGPA for Semester 6:</label>
+    <input id="sgpa6" type="number" step="0.01" min="0" max="10" class="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 mb-6">
+
+    <button onclick="calculate()" class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:outline-none">
+      Calculate
+    </button>
+
+    <h3 class="mt-6 text-base sm:text-lg font-medium text-gray-700">
+      Updated CGPA: <span id="result" class="font-bold">—</span>
+    </h3>
+    <p id="error" class="mt-4 text-base sm:text-lg text-red-600"></p>
+  </div>
+
+  <div id="excel-fab" class="fixed bottom-4 right-4 flex items-center gap-2 z-50">
+    <a
+      href="https://docs.google.com/spreadsheets/d/11qgVDqVmdrMVrBAOrVtgc7WD6aiPBy71/edit?usp=sharing&ouid=102305582136662791803&rtpof=true&sd=true"
+      target="_blank"
+      id="excel-icon"
+      aria-label="Open Semester 5 CGPA Excel"
+      title="Open Semester 5 CGPA Excel"
+      class="bg-white text-gray-800 rounded-full p-3 shadow-lg"
+    >📄</a>
+    <span class="excel-label bg-gray-800 text-white px-2 py-1 rounded-md text-sm hidden sm:inline">CGPA up to Sem5</span>
+  </div>
+
+  <script>
+    function calculate() {
+      const cgpa5 = parseFloat(document.getElementById('cgpa5').value);
+      const sgpa6 = parseFloat(document.getElementById('sgpa6').value);
+      const errorEl = document.getElementById('error');
+      const resultEl = document.getElementById('result');
+
+      if (
+        isNaN(cgpa5) || isNaN(sgpa6) ||
+        cgpa5 < 0 || cgpa5 > 10 ||
+        sgpa6 < 0 || sgpa6 > 10
+      ) {
+        errorEl.textContent = 'Please enter valid values between 0 and 10.';
+        resultEl.textContent = '—';
+        return;
+      }
+
+      errorEl.textContent = '';
+
+      const updatedCgpa = ((cgpa5 * 123) + (sgpa6 * 23)) / 146;
+      resultEl.textContent = updatedCgpa.toFixed(2);
+    }
+  </script>
+</body>
+</html>

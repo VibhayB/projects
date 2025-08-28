@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Timer Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 50px;
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        #timer {
+            font-size: 4em;
+            margin: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #message, #points {
+            font-size: 1.5em;
+            margin: 20px;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background: #f0f0f0;
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #miniGame {
+            display: none;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #miniGameButton {
+            background: #4caf50;
+            color: white;
+        }
+        #miniGameButton:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Focus Timer Game</h1>
+    <div id="timer">25:00</div>
+    <div id="message">Press Start to begin your focus session!</div>
+    <button id="startButton">Start Focus Session</button>
+    <button id="resetButton">Reset</button>
+    <div id="points">Points: 0</div>
+    <div id="miniGame">
+        <h2>Break Time! Play this quick game:</h2>
+        <button id="miniGameButton">Press me!</button>
+    </div>
+    <script>
+        let focusTime = 25*60; // 25 minutes in seconds
+        let breakTime = 5 * 60; // 5 minutes in seconds
+        let timer;
+        let isFocusSession = true;
+        let points = 0;
+
+        const timerDisplay = document.getElementById('timer');
+        const messageDisplay = document.getElementById('message');
+        const pointsDisplay = document.getElementById('points');
+        const miniGame = document.getElementById('miniGame');
+        const startButton = document.getElementById('startButton');
+        const resetButton = document.getElementById('resetButton');
+
+        startButton.addEventListener('click', startTimer);
+        resetButton.addEventListener('click', resetTimer);
+        document.getElementById('miniGameButton').addEventListener('click', playMiniGame);
+
+        function startTimer() {
+            if (timer) clearInterval(timer);
+            timer = setInterval(updateTimer, 1000);
+            startButton.disabled = true;
+            messageDisplay.textContent = isFocusSession ? 'Focus on your task!' : 'Take a break!';
+            miniGame.style.display = 'none';
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            focusTime = 25 * 60;
+            breakTime = 5 * 60;
+            isFocusSession = true;
+            timerDisplay.textContent = '25:00';
+            messageDisplay.textContent = 'Press Start to begin your focus session!';
+            startButton.disabled = false;
+            miniGame.style.display = 'none';
+        }
+
+        function updateTimer() {
+            if (isFocusSession) {
+                if (focusTime <= 0) {
+                    clearInterval(timer);
+                    isFocusSession = false;
+                    points++;
+                    pointsDisplay.textContent = 'Points: ' + points;
+                    focusTime = 25 * 60;
+                    startButton.disabled = false;
+                    miniGame.style.display = 'block';
+                    messageDisplay.textContent = 'Focus session complete! Enjoy a break!';
+                } else {
+                    focusTime--;
+                    displayTime(focusTime);
+                }
+            } else {
+                if (breakTime <= 0) {
+                    clearInterval(timer);
+                    isFocusSession = true;
+                    breakTime = 5 * 60;
+                    startButton.disabled = false;
+                    miniGame.style.display = 'none';
+                    messageDisplay.textContent = 'Break time over! Ready for another session?';
+                } else {
+                    breakTime--;
+                    displayTime(breakTime);
+                }
+            }
+        }
+
+        function displayTime(time) {
+            const minutes = Math.floor(time / 60);
+            const seconds = time % 60;
+            timerDisplay.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        function playMiniGame() {
+            alert('Mini-game played! Enjoy your break!');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIML StudyConnect</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <meta property="og:title" content="AIML StudyConnect">
+    <meta property="og:description" content="Your all-in-one academic hub for course content, essential resources, designed to streamline your educational journey.">
+    <meta property="og:image" content="load.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AIML StudyConnect">
+
+</head>
+<body>
+
+    <header>
+        <button class="menu-button" id="menu" onclick="toggleMenu()">&#9776;</button>
+        <div id = "header" class="logo">AIML StudyConnect</div>
+        <div class="home-button-container">
+            <button class="guide-button">
+                <svg width="32" height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="11" stroke="#555" stroke-width="2" fill="none"/>
+                    <text x="12" y="16" text-anchor="middle" font-size="14" fill="#555" font-family="Arial" font-weight="bold">?</text>
+                </svg>
+            </button>
+            <button class="home-button" onclick = "handleHomeClick()">Sign In</button>
+            <div id="dropdown-menu" class="dropdown">
+                <div id="user-email" class="dropdown-email">User Email</div>
+                <a href="#" id="sign-out">Sign Out</a>
+            </div>
+        </div>
+        
+    </header><div class = "remainingbody">
+    <div id="status-bar"></div>
+    <div id="custom-alert" style = "display: none;">
+        <button class="alert-close-button" onclick = "closeAlert()">&times;</button>
+        <div class="alert-content">
+          <img src = "load.png" id="alertimg" class="alert-image">
+        <p class="alert-message"></p>
+        <button class="alert-button" onclick="closeAlert()">OK</button>
+        </div>
+      </div>
+      
+    <div id="overlay" class="closed"></div>
+
+    <nav id="hamburger-menu" class="closed">
+        <button class="close-menu" onclick="toggleMenu()">&#10005;</button>
+        <ul>
+            <li onclick="showTab(event, 'home')">Home</li>
+            <li onclick="showTab(event, 'course')">Course</li>
+            <li onclick="showTab(event, 'exams')">Exams</li>
+            <li onclick="showTab(event, 'feed')">Feed</li>
+            <li onclick="showTab(event, 'forms')">Important Docs</li>
+            <li onclick="showTab(event, 'productivity')">Productivity</li>
+            <li onclick="showTab(event, 'contacts')">Important Contacts</li>
+            <li onclick="showTab(event, 'calendar')">Academic Calendar</li>
+            <li onclick="showTab(event, 'sites')">Online Sites</li>
+            <li onclick="showTab(event, 'installers')">Installers</li>
+            <li onclick="showTab(event, 'games')">Games</li>
+            <li onclick="showTab(event, 'others')">Others</li>
+        </ul>
+    </nav>
+    
+    <main>
+    <div id="home" class="content active">
+        <section id = "banner">
+            <div class="info-container">
+                <div class="info-card">
+                    <img src="banner.png" alt="AIML StudyLink">
+                    <div class="info-text">Welcome to the AIML StudyConnect, an all in one solution</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://images.shiksha.com/mediadata/images/articles/1586528603php1km08b.jpeg" alt="Course Content">
+                    <div class="info-text">Access all the course-related content under the Course tab</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://cdn.prod.website-files.com/5c7fdbdd4e3feeee8dd96dd2/6516fb070bcad4b3dd50225b_Blog_Header_5-new-feature-announcement-examples.png" alt="Feed">
+                    <div class="info-text">View all the announcements from various sources under the Feed tab</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://www.cflowapps.com/wp-content/uploads/2021/12/diffnce_job_task_process.jpeg" alt="Tasks">
+                    <div class="info-text">View all the tasks, along with their deadlines under the Tasks tab</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://academiamag.com/wp-content/uploads/2022/05/shutterstock_1664708983.jpg" alt="Exams">
+                    <div class="info-text">View exam-focused course content along with results, datesheets, previous year papers under the Exams tab</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://stability-images-upload.s3.amazonaws.com/v1_txt2img_d46f0fdf-2960-4dc5-9f6a-7f47d54efb07.png" alt="Games">
+                    <div class="info-text">Explore fun games under the Games tab (you can also suggest ideas)</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://media.wired.com/photos/653bddf62692abf70732f95b/master/pass/Google-Calendar-Appointments-Gear-GettyImages-1385868923.jpg" alt="Academic Calendar">
+                    <div class="info-text">View the important dates including festivals, events, official holidays etc. through the Academic Calendar tab in the menu</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://images.ctfassets.net/lzny33ho1g45/2EAWzigqaiY0419zbfvRTs/c1a2565f7cff3fd16a7fe00b1354e5e4/Group_4075.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760" alt="Important Forms and Sheets">
+                    <div class="info-text">View the important sheets and form including academic calendars, details in Important Docs</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://www.ismartrecruit.com/upload/blog/main_image/boost-employee-productivity.webp" alt="Important Forms and Sheets">
+                    <div class="info-text">Explore Productive Stuff in the Productivity tab</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkMEMzRWdsNhGuQ8iGX_hwC_5cCoThvx-dIQ&s" alt="Important Contacts">
+                    <div class="info-text">View the important contacts including the phone numbers and email-ids through the Important Contacts tab in the menu</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://miro.medium.com/v2/resize:fit:600/1*Ngfn4T0pghtLHZFqRpC3MQ.png" alt="Installers">
+                    <div class="info-text">Visit the official installers of various software like IDLE Python, VS code, etc. through the Installers tab in the menu</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://www.webyouth.in/wp-content/uploads/2021/01/website.jpg" alt="Online Sites">
+                    <div class="info-text">Quickly access a bunch of useful websites through the Online Sites tab in the menu as well as suggest some (you can mention websites or ideas)</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://res.cloudinary.com/hilnmyskv/image/upload/q_auto,f_auto/v1718389030/Algolia_com_Blog_assets/Featured_images/product/what-are-data-privacy-and-data-security-why-are-they-critical-for-an-organization/udz45c2bizidaosiciuh.jpg" alt="Data Safety">
+                    <div class="info-text">Most of the data used is either stored locally on user device or used by google services which is not available to the website owner</div>
+                </div>
+                <div class="info-card">
+                    <img src="https://cdn.elearningindustry.com/wp-content/uploads/2017/12/4-killer-examples-of-using-mobile-apps-in-corporate-training.jpeg" alt="Continue to the website">
+                    <div class="info-text">That's it! You can now continue to use the website</div>
+                </div>  
+                <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+                <a class="next" onclick="changeSlide(1)">&#10095;</a>
+            </div>
+            <div class="dots">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
+                <span class="dot" onclick="currentSlide(6)"></span>
+                <span class="dot" onclick="currentSlide(7)"></span>
+                <span class="dot" onclick="currentSlide(8)"></span>
+                <span class="dot" onclick="currentSlide(9)"></span>
+                <span class="dot" onclick="currentSlide(10)"></span>
+                <span class="dot" onclick="currentSlide(11)"></span>
+                <span class="dot" onclick="currentSlide(12)"></span>
+                <span class="dot" onclick="currentSlide(13)"></span>
+                <span class="dot" onclick="currentSlide(14)"></span>
+            </div>
+        </section>    
+        <div id="chatbot-toggle" style="display:none; z-index:1003;">
+            <img src="https://cdn-icons-png.flaticon.com/512/8943/8943377.png" alt="Chatbot Icon">
+        </div>
+        </div>
+    </main>
+    <div id="screen">
+        <div id="course" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+        <div id="feed" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+        <div id="exams" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+        <div id="games" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+        <div id="calendar" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+        <div id="forms" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+        <div id="productivity" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+        <div id="contacts" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+        <div id="installers" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+        <div id="sites" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+        <div id="others" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+        <div id="guide" class="content">
+            <div style="position: relative; margin: 40px; padding: 20px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: center; border: 1px solid #ddd;">
+                    <span style="font-size: 20px; font-weight: bold; color: #555;">Sign in to view content</span>
+                </div>
+                <div style="position: absolute; left: -20px; top: 10px; background-color: #ffcc00; padding: 8px 12px; border-radius: 3px; transform: rotate(-10deg);">
+                    <span style="font-weight: bold; color: #000;">Notice</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script type="module" src="fbs.js"></script>    
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', (event) => {
+            if (event.ctrlKey && (event.key === 'u' || event.key === 'U' || 
+                                event.key === 'i' || event.key === 'I' ||
+                                event.key === 's' || event.key === 'S')) {
+                event.preventDefault();
+            }
+            if (event.key === 'F12') {
+                event.preventDefault();
+            }
+        });/*
+        setInterval(function() {
+        if (window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100) {
+            showAlert("Please close the developer tools!","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxuQm9ckdC_xbzQpxwzOz34RdLyskux1PyFw&s");
+        }
+        }, 1000);(function() {
+        const element = new Image();
+        Object.defineProperty(element, 'id', {
+            get: function() {
+                showAlert('Developer tools detected!',"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxuQm9ckdC_xbzQpxwzOz34RdLyskux1PyFw&s");
+            }
+        });
+    })();*/
+    </script>
+    <script src="chatbot.js"></script>
+    <script src="sections/productivity.js"></script>
+    <script src="scripts.js"></script>    
+    <script src="sections/guide.js"></script>
+    <script src="sections/games.js"></script>
+    <script src="sections/others.js"></script>
+    <script src="sections/calendar.js"></script>
+    <script src="sections/installers.js"></script>
+    <script src="sections/online sites.js"></script>
+    <script src="sections/contacts.js"></script>
+    <script src="sections/forms.js"></script>
+    <script src="sections/exams.js"></script>
+    <script src="sections/feed.js"></script>
+    <script src="sections/course.js"></script>
+</body>
+</html>

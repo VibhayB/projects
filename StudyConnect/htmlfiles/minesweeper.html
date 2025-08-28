@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<style>
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+#minesweeper {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    gap: 5px;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    background-color: #6c757d;
+    border: 2px solid #343a40;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.cell:hover {
+    background-color: #5a6268;
+}
+
+.cell.revealed {
+    background-color: peachpuff;
+    color: black;
+    cursor: default;
+}
+
+.cell.mine {
+    background-color: #dc3545;
+    color: #fff;
+    font-size: 24px;
+}
+
+.cell.flagged {
+    background-color: #ffc107;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index: 10;
+}
+
+.overlay.show {
+    display: flex;
+}
+
+.overlay .content {
+    background: #343a40;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+    <div class="container mt-5 text-center">
+        <h1 class="mb-4">Minesweeper</h1>
+        <div id="minesweeper"></div>
+    </div>
+
+    <div id="overlay" class="overlay">
+        <div class="content">
+            <h2 id="result"></h2>
+            <button id="restartBtn" class="btn btn-primary mt-3">Restart</button>
+        </div>
+    </div>
+
+    <script>
+const grid = document.getElementById('minesweeper');
+const rows = 10;
+const cols = 10;
+const mines = 10;
+let board = [];
+let firstClick = true;
+
+function createBoard() {
+    board = Array.from({ length: rows }, () => Array(cols).fill(0));
+    for (let i = 0; i < mines; i++) {
+        let x, y;
+        do {
+            x = Math.floor(Math.random() * rows);
+            y = Math.floor(Math.random() * cols);
+        } while (board[x][y] === 'M');
+        board[x][y] = 'M';
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (x + dx >= 0 && x + dx < rows && y + dy >= 0 && y + dy < cols && board[x + dx][y + dy] !== 'M') {
+                    board[x + dx][y + dy]++;
+                }
+            }
+        }
+    }
+}
+
+function createGrid() {
+    grid.innerHTML = '';
+    board.forEach((row, x) => {
+        row.forEach((cell, y) => {
+            const cellElement = document.createElement('div');
+            cellElement.className = 'cell animate__animated';
+            cellElement.addEventListener('click', () => handleCellClick(x, y));
+            cellElement.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                toggleFlag(x, y);
+            });
+            grid.appendChild(cellElement);
+        });
+    });
+}
+
+function handleCellClick(x, y) {
+    const cellElement = grid.children[x * cols + y];
+    if (cellElement.classList.contains('revealed') || cellElement.classList.contains('flagged')) return;
+
+    if (firstClick) {
+        firstClick = false;
+        if (board[x][y] === 'M') {
+            moveMine(x, y);
+        }
+    }
+
+    if (board[x][y] === 'M') {
+        revealMines();
+        showGameOver(false);
+    } else {
+        revealCell(x, y);
+        checkWin();
+    }
+}
+
+function revealCell(x, y) {
+    const cellElement = grid.children[x * cols + y];
+    if (cellElement.classList.contains('revealed') || cellElement.classList.contains('flagged')) return;
+
+    cellElement.className = 'cell revealed animate_animated animate_flipInX';
+    cellElement.innerText = board[x][y] || '';
+    cellElement.style.backgroundColor = 'peachpuff';
+
+    if (board[x][y] === 0) {
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (x + dx >= 0 && x + dx < rows && y + dy >= 0 && y + dy < cols) {
+                    revealCell(x + dx, y + dy);
+                }
+            }
+        }
+    }
+}
+
+function revealMines() {
+    board.forEach((row, x) => {
+        row.forEach((cell, y) => {
+            if (cell === 'M') {
+                const cellElement = grid.children[x * cols + y];
+                cellElement.className = 'cell mine animate_animated animate_shakeX';
+                cellElement.innerHTML = '<i class="fas fa-bomb"></i>';
+            }
+        });
+    });
+}
+
+function moveMine(x, y) {
+    let newX, newY;
+    do {
+        newX = Math.floor(Math.random() * rows);
+        newY = Math.floor(Math.random() * cols);
+    } while (board[newX][newY] === 'M' || (newX === x && newY === y));
+    board[x][y] = 0;
+    board[newX][newY] = 'M';
+
+    updateNumbersAround(newX, newY);
+    updateNumbersAround(x, y, -1);
+}
+
+function updateNumbersAround(x, y, increment = 1) {
+    for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+            if (x + dx >= 0 && x + dx < rows && y + dy >= 0 && y + dy < cols && board[x + dx][y + dy] !== 'M') {
+                board[x + dx][y + dy] += increment;
+            }
+        }
+    }
+}
+
+function toggleFlag(x, y) {
+    const cellElement = grid.children[x * cols + y];
+    if (cellElement.classList.contains('revealed')) return;
+
+    if (cellElement.classList.contains('flagged')) {
+        cellElement.classList.remove('flagged');
+        cellElement.innerHTML = '';
+    } else {
+        cellElement.classList.add('flagged');
+        cellElement.innerHTML = '<i class="fas fa-flag"></i>';
+    }
+}
+
+function checkWin() {
+    let allCellsRevealed = true;
+    for (let x = 0; x < rows; x++) {
+        for (let y = 0; y < cols; y++) {
+            const cellElement = grid.children[x * cols + y];
+            if (!cellElement.classList.contains('revealed') && board[x][y] !== 'M') {
+                allCellsRevealed = false;
+                break;
+            }
+        }
+    }
+    if (allCellsRevealed) {
+        showGameOver(true);
+    }
+}
+
+function showGameOver(win) {
+    const overlay = document.getElementById('overlay');
+    const resultText = document.getElementById('result');
+    resultText.textContent = win ? 'You Won!' : 'Game Over!';
+    overlay.classList.add('show');
+
+    document.getElementById('restartBtn').onclick = () => {
+        overlay.classList.remove('show');
+        firstClick = true;
+        createBoard();
+        createGrid();
+    };
+}
+
+createBoard();
+createGrid();
+</script>
+</body>
+</html>

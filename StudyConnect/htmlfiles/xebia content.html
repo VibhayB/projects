@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xebia Content</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .file {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .file:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .file a {
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .file a:hover {
+            background-color: #1e40af;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-4xl">
+        <h1 class="text-4xl sm:text-5xl font-bold text-center text-gray-800 mb-10 tracking-tight">
+            Xebia Content
+        </h1>
+        <div class="file-container space-y-6" id="fileContainer">
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileLinks = JSON.parse(localStorage.getItem('xebiacontent')) || [];
+
+            const fileContainer = document.getElementById('fileContainer');
+
+            fileLinks.forEach(link => {
+                const fileDiv = document.createElement('div');
+                fileDiv.className = 'file bg-white p-6 rounded-xl border border-gray-200 shadow-lg';
+
+                const title = document.createElement('h2');
+                title.className = 'text-xl sm:text-2xl font-semibold text-blue-900 mb-4';
+                title.textContent = link.title;
+
+                const anchor = document.createElement('a');
+                anchor.className = 'inline-block px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700';
+                anchor.href = link.url;
+                anchor.target = '_blank';
+                anchor.textContent = 'View File';
+
+                fileDiv.appendChild(title);
+                fileDiv.appendChild(anchor);
+                fileContainer.appendChild(fileDiv);
+            });
+        });
+    </script>
+</body>
+</html>

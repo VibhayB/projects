@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #333;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      font-size: 1.5em;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    input {
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      width: calc(100% - 22px); 
+      box-sizing: border-box;
+    }
+    select {
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      width: calc(100% - 22px); 
+      box-sizing: border-box;
+    }
+    .section {
+      display: none;
+      margin-bottom: 20px;
+    }
+    #calculate-button {
+      padding: 10px 20px;
+      font-size: 1em;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #calculate-button:hover {
+      background-color: #0056b3;
+    }
+    #error-message {
+      color: red;
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+    h3 {
+      font-size: 1.2em;
+      color: #333;
+      margin-top: 20px;
+    }
+    .result {
+      font-weight: bold;
+      color: #28a745;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Class Need Calculator</h1>
+    <h2>Minimum Classes Needed to Reach 75% Attendance</h2>
+
+    <label for="input-option">Select Input Option:</label>
+    <select id="input-option" onchange="toggleInputSection()">
+      <option value="0">--Select an Option--</option>
+      <option value="1">Total Classes and Attended Classes</option>
+      <option value="2">Total Classes and Missed Classes</option>
+      <option value="3">Missed Classes and Attended Classes</option>
+      <option value="4">Current Attendance (%) and Total Classes</option>
+      <option value="5">Current Attendance (%) and Attended Classes</option>
+      <option value="6">Current Attendance (%) and Missed Classes</option>
+    </select>
+
+    <div id="section1" class="section">
+      <label for="total-classes-1">Total Classes:</label>
+      <input type="number" id="total-classes-1"><br>
+      <label for="attended-classes">Attended Classes:</label>
+      <input type="number" id="attended-classes"><br>
+    </div>
+
+    <div id="section2" class="section">
+      <label for="total-classes-2">Total Classes:</label>
+      <input type="number" id="total-classes-2"><br>
+      <label for="missed-classes-1">Missed Classes:</label>
+      <input type="number" id="missed-classes-1"><br>
+    </div>
+
+    <div id="section3" class="section">
+      <label for="missed-classes-2">Missed Classes:</label>
+      <input type="number" id="missed-classes-2"><br>
+      <label for="attended-classes-2">Attended Classes:</label>
+      <input type="number" id="attended-classes-2"><br>
+    </div>
+
+    <div id="section4" class="section">
+      <label for="current-attendance">Current Attendance (%):</label>
+      <input type="number" id="current-attendance" step="0.01"><br>
+      <label for="total-classes-3">Total Classes:</label>
+      <input type="number" id="total-classes-3"><br>
+    </div>
+
+    <div id="section5" class="section">
+      <label for="current-attendance-2">Current Attendance (%):</label>
+      <input type="number" id="current-attendance-2" step="0.01"><br>
+      <label for="attended-classes-3">Attended Classes:</label>
+      <input type="number" id="attended-classes-3"><br>
+    </div>
+
+    <div id="section6" class="section">
+      <label for="current-attendance-3">Current Attendance (%):</label>
+      <input type="number" id="current-attendance-3" step="0.01"><br>
+      <label for="missed-classes-3">Missed Classes:</label>
+      <input type="number" id="missed-classes-3"><br>
+    </div>
+
+    <button id="calculate-button" onclick="calculateClassesNeeded()">Calculate Minimum Classes Needed</button>
+
+    <h3>Minimum Classes Needed: <span id="result" class="result"></span></h3>
+
+    <p id="error-message"></p>
+  </div>
+
+  <script>
+    function toggleInputSection() {
+      var option = document.getElementById('input-option').value;
+      var sections = document.querySelectorAll('.section');
+      var calculateButton = document.getElementById('calculate-button');
+      
+      sections.forEach(function(section) {
+        section.style.display = 'none';
+      });
+
+      calculateButton.style.display = 'none';
+
+      if (option == "1") {
+        document.getElementById('section1').style.display = 'block';
+        calculateButton.style.display = 'inline-block';
+      } else if (option == "2") {
+        document.getElementById('section2').style.display = 'block';
+        calculateButton.style.display = 'inline-block';
+      } else if (option == "3") {
+        document.getElementById('section3').style.display = 'block';
+        calculateButton.style.display = 'inline-block';
+      } else if (option == "4") {
+        document.getElementById('section4').style.display = 'block';
+        calculateButton.style.display = 'inline-block';
+      } else if (option == "5") {
+        document.getElementById('section5').style.display = 'block';
+        calculateButton.style.display = 'inline-block';
+      } else if (option == "6") {
+        document.getElementById('section6').style.display = 'block';
+        calculateButton.style.display = 'inline-block';
+      }
+    }
+
+    function calculateClassesNeeded() {
+      var option = document.getElementById('input-option').value;
+      var totalClasses, attendedClasses, missedClasses, currentAttendance;
+
+      if (option == "1") {
+        totalClasses = parseFloat(document.getElementById('total-classes-1').value);
+        attendedClasses = parseFloat(document.getElementById('attended-classes').value);
+        missedClasses = totalClasses - attendedClasses;
+      } else if (option == "2") {
+        totalClasses = parseFloat(document.getElementById('total-classes-2').value);
+        missedClasses = parseFloat(document.getElementById('missed-classes-1').value);
+        attendedClasses = totalClasses - missedClasses;
+      } else if (option == "3") {
+        missedClasses = parseFloat(document.getElementById('missed-classes-2').value);
+        attendedClasses = parseFloat(document.getElementById('attended-classes-2').value);
+        totalClasses = attendedClasses + missedClasses;
+      } else if (option == "4") {
+        currentAttendance = parseFloat(document.getElementById('current-attendance').value);
+        totalClasses = parseFloat(document.getElementById('total-classes-3').value);
+        attendedClasses = (currentAttendance / 100) * totalClasses;
+        missedClasses = totalClasses - attendedClasses;
+      } else if (option == "5") {
+        currentAttendance = parseFloat(document.getElementById('current-attendance-2').value);
+        attendedClasses = parseFloat(document.getElementById('attended-classes-3').value);
+        totalClasses = attendedClasses / (currentAttendance / 100);
+        missedClasses = totalClasses - attendedClasses;
+      } else if (option == "6") {
+        currentAttendance = parseFloat(document.getElementById('current-attendance-3').value);
+        missedClasses = parseFloat(document.getElementById('missed-classes-3').value);
+        totalClasses = missedClasses / (1 - (currentAttendance / 100));
+        attendedClasses = totalClasses - missedClasses;
+      } else {
+        document.getElementById('error-message').innerText = 'Please select a valid input option and enter the required values.';
+        return;
+      }
+
+      if (isNaN(totalClasses) || isNaN(attendedClasses) || totalClasses <= 0 || attendedClasses < 0 || attendedClasses > totalClasses) {
+        document.getElementById('error-message').innerText = 'Invalid input values. Please enter valid numbers.';
+        return;
+      } else {
+        document.getElementById('error-message').innerText = '';
+      }
+
+      var minimumClassesNeeded = Math.max(0, Math.ceil((0.75 * totalClasses - attendedClasses) / 0.25));
+
+      document.getElementById('result').innerText = minimumClassesNeeded;
+    }
+  </script>
+</body>
+</html>

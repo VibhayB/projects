@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clan Links</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .clan {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .clan:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .clan a {
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .clan a:hover {
+            background-color: #1e40af;
+            color: white;
+        }
+        h1 {
+            position: relative;
+            transition: color 0.2s ease;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-4xl">
+        <h1 class="text-4xl sm:text-5xl font-bold text-center text-gray-800 mb-12 tracking-tight">
+            Clans and Their Links
+        </h1>
+        <div class="clan-container space-y-6" id="clanContainer">
+            
+        </div>
+    </div>
+    <script>
+        const clans = JSON.parse(localStorage.getItem('clanlinks')) || [];
+
+        const container = document.getElementById('clanContainer');
+
+        clans.forEach(clan => {
+            const clanDiv = document.createElement('div');
+            clanDiv.className = 'clan bg-white p-6 rounded-xl border border-gray-200 shadow-lg';
+            
+            const clanTitle = document.createElement('h2');
+            clanTitle.className = 'text-xl sm:text-2xl font-semibold text-blue-900 mb-2';
+            clanTitle.textContent = clan.head;
+
+            const batchInfo = document.createElement('p');
+            batchInfo.className = 'text-gray-600 text-base sm:text-lg mb-4';
+            batchInfo.textContent = 'Batch 2022 ✨';
+
+            const clanLink = document.createElement('a');
+            clanLink.className = 'inline-block px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700';
+            clanLink.href = clan.url;
+            clanLink.textContent = 'Join the Clan';
+            clanLink.target = '_blank';
+
+            clanDiv.appendChild(clanTitle);
+            clanDiv.appendChild(batchInfo);
+            clanDiv.appendChild(clanLink);
+
+            container.appendChild(clanDiv);
+        });
+    </script>
+</body>
+</html>

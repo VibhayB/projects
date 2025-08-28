@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #gameContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+        }
+        #gameCanvas {
+            background-color: #f0f0f0;
+            border: 1px solid #000;
+            width: 300px;
+            height: 300px;
+        }
+        #sideScreen {
+            background-color: #ddd;
+            border: 1px solid #000;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        #controls {
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        #directionButtons {
+            margin-top: 10px;
+        }
+        #directionButtons button {
+            font-size: 18px;
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="sideScreen">
+            <h2>Snake Game</h2>
+            <div id="controls">
+                <label for="boardSize">Select Board Size:</label>
+                <select id="boardSize">
+                    <option value="10">Small (10x10)</option>
+                    <option value="15" selected>Medium (15x15)</option>
+                    <option value="20">Large (20x20)</option>
+                </select>
+                <br><br>
+                <label for="difficulty">Select Difficulty:</label>
+                <select id="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+                <br><br>
+                <button onclick="startGame()">Start Game</button>
+            </div>
+            <div id="scoreBoard">
+                <h3>Score: <span id="score">0</span></h3>
+                <p>Level: <span id="level">1</span></p>
+                <p>Max Score: <span id="maxScore">0</span></p>
+            </div>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <script>
+        
+        // Constants for directions
+        const UP = 0;
+        const DOWN = 1;
+        const LEFT = 2;
+        const RIGHT = 3;
+
+        let canvas;
+        let ctx;
+        let gridSize;
+        let snake;
+        let food;
+        let direction;
+        let interval;
+        let gameSpeed;
+        let score = 0;
+        let maxScore = 0;
+        let level = 1;
+
+        function setup() {
+            canvas = document.getElementById("gameCanvas");
+            ctx = canvas.getContext("2d");
+
+            gridSize = parseInt(document.getElementById("boardSize").value);
+
+            canvas.width = canvas.height = gridSize * 30;
+
+            snake = [
+                { x: Math.floor(gridSize / 2), y: Math.floor(gridSize / 2) }
+            ];
+
+            food = generateFood();
+
+            direction = RIGHT;
+
+            draw();
+            updateScore();
+        }
+
+        function startGame() {
+            clearInterval(interval); 
+            gameSpeed = getGameSpeed(document.getElementById("difficulty").value);
+
+            score = 0;
+            level = 1;
+            updateScore();
+
+            setup();
+            interval = setInterval(gameLoop, gameSpeed);
+        }
+
+        function getGameSpeed(difficulty) {
+            switch (difficulty) {
+                case 'easy':
+                    return 200;
+                case 'medium':
+                    return 150;
+                case 'hard':
+                    return 100;
+                default:
+                    return 150;
+            }
+        }
+
+        function gameLoop() {
+            moveSnake();
+            if (checkCollision()) {
+                gameOver();
+                return;
+            }
+            if (checkFoodCollision()) {
+                eatFood();
+            }
+            draw();
+        }
+
+function moveSnake() {
+            let headX = snake[0].x;
+            let headY = snake[0].y;
+
+            switch (direction) {
+                case UP:
+                    headY--;
+                    break;
+                case DOWN:
+                    headY++;
+                    break;
+                case LEFT:
+                    headX--;
+                    break;
+                case RIGHT:
+                    headX++;
+                    break;
+            }
+
+            snake.unshift({ x: headX, y: headY });
+
+            if (!checkFoodCollision()) {
+                snake.pop();
+            }
+        }
+
+        function checkCollision() {
+            const head = snake[0];
+
+            if (head.x < 0 || head.x >= gridSize || head.y < 0 || head.y >= gridSize) {
+                return true;
+            }
+
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function checkFoodCollision() {
+            const head = snake[0];
+            return head.x === food.x && head.y === food.y;
+        }
+
+        function eatFood() {
+            food = generateFood();
+            score += 10;
+            if (score > maxScore) {
+                maxScore = score;
+            }
+            updateScore();
+        }
+
+        function generateFood() {
+            let foodX, foodY;
+            do {
+                foodX = Math.floor(Math.random() * gridSize);
+                foodY = Math.floor(Math.random() * gridSize);
+            } while (isSnakeAtPosition(foodX, foodY));
+
+            return { x: foodX, y: foodY };
+        }
+
+        function isSnakeAtPosition(x, y) {
+            return snake.some(segment => segment.x === x && segment.y === y);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#4CAF50";
+            snake.forEach((segment, index) => {
+                ctx.fillRect(segment.x * 30, segment.y * 30, 30, 30);
+
+                if (index === 0) {
+                    ctx.fillStyle = "white";
+                    ctx.beginPath();
+                    ctx.arc(segment.x * 30 + 10, segment.y * 30 + 10, 4, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(segment.x * 30 + 20, segment.y * 30 + 10, 4, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.fillStyle = "#4CAF50"; 
+                }
+            });
+
+            ctx.fillStyle = "#FF5722";
+            ctx.fillRect(food.x * 30, food.y * 30, 30, 30);
+        }
+
+        function updateScore() {
+            document.getElementById("score").textContent = score;
+            document.getElementById("level").textContent = level;
+            document.getElementById("maxScore").textContent = maxScore;
+        }
+
+        function gameOver() {
+            clearInterval(interval);
+            ctx.fillStyle = "#000";
+            ctx.font = "30px Arial";
+            ctx.fillText("Game Over", canvas.width / 2 - 75, canvas.height / 2);
+        }
+
+        function restartGame() {
+            clearInterval(interval);
+            setup();
+            interval = setInterval(gameLoop, gameSpeed);
+        }
+
+        document.addEventListener("keydown", function(event) {
+            switch(event.key) {
+                case "ArrowUp":
+                    if (direction!== DOWN) direction = UP;
+                    break;
+                case "ArrowDown":
+                    if (direction!== UP) direction = DOWN;
+                    break;
+                case "ArrowLeft":
+                    if (direction!== RIGHT) direction = LEFT;
+                    break;
+                case "ArrowRight":
+                    if (direction!== LEFT) direction = RIGHT;
+                    break;
+            }
+        });
+
+let touchStartX, touchStartY, touchEndX, touchEndY;
+
+document.addEventListener("touchstart", function(event) {
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+});
+
+document.addEventListener("touchend", function(event) {
+    touchEndX = event.changedTouches[0].clientX;
+    touchEndY = event.changedTouches[0].clientY;
+
+    let deltaX = touchEndX - touchStartX;
+    let deltaY = touchEndY - touchStartY;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 0) {
+            moveRight();
+        } else {
+            moveLeft();
+        }
+    } else {
+        if (deltaY > 0) {
+            moveDown();
+        } else {
+            moveUp();
+        }
+    }
+});
+
+function moveUp() {
+    if (direction!== DOWN) direction = UP;
+}
+
+function moveDown() {
+    if (direction!== UP) direction = DOWN;
+}
+
+function moveLeft() {
+    if (direction!== RIGHT) direction = LEFT;
+}
+
+function moveRight() {
+    if (direction!== LEFT) direction = RIGHT;
+}
+        setup();
+    </script>
+</body>
+</html>

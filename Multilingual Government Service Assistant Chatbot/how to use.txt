@@ -1,5 +1,3 @@
-Click the server.py and make sure the 192.x.x.x code matches the one referred in the code of App.js in folder of YojnaConnect
-Open the YojnaConnect folder and in address bar press cmd to open command prompt
-Type npx expo start there to start the expo server and scan the qr from your expo go app on phone to open the app
-Now, the frontend of the app is ready to be demonstrated as long as the expo server is runnning
-To enable backend so that the app can handle the chat sent by user and reply accordingly we need to run node server.js to start and simulataneously run the backend code (server.js)
+Double click the server.py to start running the server which is responsible for query handling and make sure the ip address (192.x.x.x) of server matches the one referred in the code of App.js in folder of YojnaConnect.
+Open the YojnaConnect folder and in address bar press cmd to open command prompt.
+Type npx expo start there to start the expo server and scan the qr from your expo go app on phone to open the app and use it effortlessly

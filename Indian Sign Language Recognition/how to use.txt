@@ -1,0 +1,4 @@
+Click the server.py and make sure the 192.x.x.x code matches the one referred in the code of Quiz.js and SearchSignMenu.js in the components folder of iSignTalk directory
+Open the iSignTalk folder and in address bar press cmd to open command prompt
+Type npx expo start there to start the expo server and scan the qr from your expo go app on phone to open the app
+Now, to enable the backend which is responsible for sign prediction we need to run the command node server.js and let this server run in background

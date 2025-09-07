@@ -433,6 +433,19 @@
                 left: -1.75rem;
             }
         }
+        /* Add this to your CSS section */
+        #blog {
+            background: linear-gradient(to right, #faf5ff, #e0e7ff);
+        }
+
+        .prose p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        #mini-game {
+            background: linear-gradient(to right, #e0f2fe, #dbeafe);
+        }
     </style>
 </head>
 <body>
@@ -671,6 +684,63 @@
             </div>
         </div>
     </section>
+    
+<!-- Add this section after the Skills section -->
+<section id="blog" class="py-16 bg-gradient-to-r from-purple-50 to-indigo-50">
+    <div class="container mx-auto px-4">
+       <h2 class="section-heading text-indigo-700" data-aos="fade-up">My Coding Journey & Insights</h2>
+        <div class="max-w-3xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="100">
+        
+            <div class="bg-white rounded-xl shadow-md p-8">
+                <h3 class="text-2xl font-bold text-purple-800 mb-6">My Coding Journey & Insights</h3>
+                
+                <div class="prose prose-lg text-gray-700">
+                    <p class="mb-4">As a computer science student passionate about technology and innovation, I've embarked on a journey of continuous learning and creation. My projects span from practical applications like StudyConnect, which helps students access educational resources, to ambitious initiatives like the Indian Sign Language Recognition system that bridges communication gaps.</p>
+                    
+                    <p class="mb-4">Through my work with React Native, IoT devices like ESP32, and various AI technologies, I've discovered the transformative power of code to solve real-world problems. Each project has taught me valuable lessons about user experience, system architecture, and the importance of perseverance in debugging.</p>
+                    
+                    <p>I believe in the potential of technology to create positive change, whether it's through making government services more accessible via multilingual chatbots or developing home automation systems that improve quality of life. My journey continues as I explore new technologies and methodologies to enhance my skills and contribute meaningfully to the tech community.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add this section after the Blog section -->
+<section id="mini-game" class="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
+    <div class="container mx-auto px-4">
+        <h2 class="section-heading text-blue-600" data-aos="fade-up">Mini Game</h2>
+        <div class="mt-8 bg-white rounded-xl shadow-xl p-6 max-w-4xl mx-auto" data-aos="zoom-in">
+            <h3 class="text-2xl font-bold text-center mb-6">Check Out My Mini Game</h3>
+            <p class="text-gray-700 text-center mb-8">I've created an interactive game that showcases my programming skills and creativity. Play directly in your browser!</p>
+            
+            <div class="bg-gray-800 rounded-lg p-4 mb-6">
+                <div class="game-container bg-black rounded h-96 flex items-center justify-center">
+                    <div class="text-center text-white">
+                        <p class="text-xl mb-4">Game will open in a different window</p>
+                        <a href="https://vibhayb.github.io/Plane-Defense" 
+                           class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300"
+                           target="_blank">
+                           Play Game on GitHub Pages
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">Technologies used: HTML5, CSS3, JavaScript</p>
+                <a href="https://github.com/VibhayB/Plane-Defense" 
+                   class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
+                   target="_blank">
+                   <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                       <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 极速快3 20 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                   </svg>
+                   View Source Code on GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- Project Modals -->
     <div id="modal1" class="modal">

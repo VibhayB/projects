@@ -104,7 +104,7 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         
-        /* Education Section - Timeline */
+        /* Education Section - Timeline - FIXED */
         .education-timeline {
             position: relative;
             padding-left: 3rem;
@@ -114,29 +114,33 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 1rem;
+            left: 1.5rem;
             height: 100%;
             width: 4px;
             background: var(--primary);
             border-radius: 2px;
+            transform: translateX(-50%);
         }
         
         .timeline-item {
             position: relative;
             margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            min-height: 120px;
         }
         
         .timeline-item::before {
             content: '';
             position: absolute;
             left: -2.25rem;
-            top: 0.5rem;
             width: 1.5rem;
             height: 1.5rem;
             border-radius: 50%;
             background: white;
             border: 4px solid var(--primary);
             z-index: 2;
+            box-sizing: border-box;
         }
         
         /* Projects Section - Interactive Cards */
@@ -420,6 +424,14 @@
             .nav-link {
                 padding: 0.5rem 0.8rem;
             }
+            
+            .education-timeline {
+                padding-left: 2rem;
+            }
+            
+            .timeline-item::before {
+                left: -1.75rem;
+            }
         }
     </style>
 </head>
@@ -445,7 +457,7 @@
             <h1 class="text-4xl md:text-5xl font-bold mb-4" data-aos="fade-down">Vibhay Bakshi</h1>
             <p class="text-xl md:text-2xl mb-8" data-aos="fade-down" data-aos-delay="100">Computer Science Student | Developer | Innovator</p>
             <div class="flex justify-center space-x-4 flex-wrap">
-                <a href="mailto:bakshivibhay@gmail" class="contact-btn px-5 py-3 rounded-full flex items-center" data-aos="zoom-in" data-aos-delay="300">
+                <a href="mailto:bakshivibhay@gmail.com" class="contact-btn px-5 py-3 rounded-full flex items-center" data-aos="zoom-in" data-aos-delay="300">
                     <i class="fas fa-envelope mr-2"></i>Email
                 </a>
                 <a href="https://www.linkedin.com/in/vibhay-bakshi-71bb89258" class="contact-btn px-5 py-3 rounded-full flex items-center" data-aos="zoom-in" data-aos-delay="400">
@@ -528,6 +540,32 @@
                         <p class="text-gray-700 mt-2">A mobile chatbot app for personalized responses about government schemes.</p>
                         <div class="mt-4 flex justify-end">
                             <span class="text-primary text-sm font-medium" onclick="openModal('modal3'); event.stopPropagation();">View Details →</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card" data-aos="flip-left" data-aos-delay="300" onclick="openProjectLink('https://example.com/isl')">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/400x200?text=ISL+Recognition" alt="ISL Recognition">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="text-xl font-semibold">Indian Sign Language Recognition</h3>
+                        <p class="text-gray-700 mt-2">An interactive app for learning and translating Indian Sign Language from video inputs.</p>
+                        <div class="mt-4 flex justify-end">
+                            <span class="text-primary text-sm font-medium" onclick="openModal('modal4'); event.stopPropagation();">View Details →</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card" data-aos="flip-left" data-aos-delay="400" onclick="openProjectLink('https://example.com/homeautomation')">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/400x200?text=Home+Automation" alt="Home Automation">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="text-xl font-semibold">Home Automation System using ESP32</h3>
+                        <p class="text-gray-700 mt-2">A wireless home automation prototype enabling remote operation without geographical limitations.</p>
+                        <div class="mt-4 flex justify-end">
+                            <span class="text-primary text-sm font-medium" onclick="openModal('modal5'); event.stopPropagation();">View Details →</span>
                         </div>
                     </div>
                 </div>
@@ -641,9 +679,9 @@
             <h3 class="text-2xl font-semibold mb-4">StudyConnect</h3>
             <p class="text-gray-700 mb-4">A student-focused website for accessing course content, useful links, and tools like a CGPA calculator.</p>
             <ul class="list-disc ml-6 text-gray-700 space-y-2">
-                <li>Developed frontend with HTML, CSS, JavaScript.</li>
-                <li>Integrated Firebase for data storage and GitHub Pages for hosting.</li>
-                <li>Implemented local storage for user preferences and Gmail login for authentication.</li>
+                <li>Built a student-focused website for classmates to access course content, useful links, and tools (e.g., CGPA calculator).</li>
+                <li>Developed frontend with HTML, CSS, JavaScript; integrated Firebase for data storage and GitHub Pages for hosting.</li>
+                <li>Implemented local storage for storing user preferences, and login with Gmail ID for student authentication.</li>
             </ul>
         </div>
     </div>
@@ -654,8 +692,9 @@
             <h3 class="text-2xl font-semibold mb-4">Service Bazaar</h3>
             <p class="text-gray-700 mb-4">A prototype mobile app connecting users with local service providers.</p>
             <ul class="list-disc ml-6 text-gray-700 space-y-2">
-                <li>Built using React Native with intuitive UI/UX for browsing and booking.</li>
-                <li>Used Firebase for data storage and Node.js for backend integration.</li>
+                <li>Built a prototype mobile app connecting users with local service providers using React Native.</li>
+                <li>Designed intuitive UI/UX for service browsing, booking, and communication between customers and providers.</li>
+                <li>Used Firebase for storing data, and Node.js for backend integration.</li>
             </ul>
         </div>
     </div>
@@ -666,8 +705,36 @@
             <h3 class="text-2xl font-semibold mb-4">Multilingual Government Service Assistant Chatbot</h3>
             <p class="text-gray-700 mb-4">A mobile chatbot app for personalized responses about government schemes.</p>
             <ul class="list-disc ml-6 text-gray-700 space-y-2">
-                <li>Developed using React Native, tested and deployed via Expo Go.</li>
-                <li>Implemented MiniLM-v6 for document retrieval and Gemini API for multilingual translation.</li>
+                <li>Built a mobile chatbot app to provide personalized responses to user queries about government schemes.</li>
+                <li>Developed the app using React Native, with live testing and deployment via Expo Go.</li>
+                <li>Implemented MiniLM-v6 for relevant document retrieval & Gemini API for multilingual translation & summarization.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal4')">&times;</span>
+            <h3 class="text-2xl font-semibold mb-4">Indian Sign Language Recognition</h3>
+            <p class="text-gray-700 mb-4">An interactive app for learning and translating Indian Sign Language from video inputs.</p>
+            <ul class="list-disc ml-6 text-gray-700 space-y-2">
+                <li>Designed an interactive app for learning and translating Indian Sign Language from video inputs.</li>
+                <li>Created the interface in React Native and deployed to mobile devices using Expo Go.</li>
+                <li>Built a hybrid CNN + LSTM model to classify sign language gestures accurately.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="modal5" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal5')">&times;</span>
+            <h3 class="text-2xl font-semibold mb-4">Home Automation System using ESP32</h3>
+            <p class="text-gray-700 mb-4">A wireless home automation prototype enabling remote operation without geographical limitations.</p>
+            <ul class="list-disc ml-6 text-gray-700 space-y-2">
+                <li>Developed a wireless home automation prototype enabling remote operation without geographical limitations.</li>
+                <li>Integrated IoT components (various sensors and modules) connected to a central ESP32 board.</li>
+                <li>Designed circuits using TinkerCAD and Circuit.io; programmed the ESP32 in C/C++ using Arduino IDE.</li>
+                <li>Implemented Google Apps Script to store ESP32 data in Google Sheets and Google AppSheet to create a user-friendly UI for controlling and monitoring devices remotely.</li>
             </ul>
         </div>
     </div>
@@ -717,3 +784,4 @@
     </script>
 </body>
 </html>
+

@@ -433,9 +433,22 @@
                 left: -1.75rem;
             }
         }
-        /* Add this to your CSS section */
+        /* Add these styles to your existing CSS */
         #aboutme {
-            background: linear-gradient(to right, #faf5ff, #e0e7ff);
+            background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+        }
+        
+        #aboutme .container {
+            max-width: 120rem; /* Wider container */
+        }
+        
+        #aboutme .bg-white {
+            border-left: 5px solid #4f46e5; /* Accent border */
+        }
+        
+        #aboutme .text-lg {
+            font-size: 1.125rem;
+            line-height: 1.7;
         }
 
         .prose p {
@@ -685,10 +698,10 @@
         </div>
     </section>
     
-<section id="aboutme" class="py-16 bg-gradient-to-r from-purple-50 to-indigo-50">
+<section id="aboutme" class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
   <div class="container mx-auto px-4">
     <h2 class="section-heading text-indigo-700" data-aos="fade-up">About Me</h2>
-    <div class="max-w-3xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="100">
+    <div class="max-w-6xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="100">
       <div class="bg-white rounded-xl shadow-md p-8 prose prose-lg text-gray-700">
         
         <h3 class="text-2xl font-bold text-purple-800 mb-4">School Years</h3>

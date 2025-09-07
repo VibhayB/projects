@@ -1,0 +1,6 @@
+Welcome to AIML StudyConnect!
+AIML StudyConnect is an all-in-one, student-focused platform designed to simplify and enhance the academic journey for AIML batch students. This website brings together essential resources—course content, important documents, installer links, and a dedicated feed for announcements and messages—into a single, well-organized space.
+By consolidating all academic materials in one place, the website makes it easier to locate and access content efficiently. Beyond resource management, AIML StudyConnect offers additional tools such as an SGPA/CGPA calculator, an academic calendar view, exam-focused materials, and more.
+The website is hosted live using GitHub Pages, with data stored securely on Firebase in read-only mode. User-specific preferences are stored locally on the device, ensuring that personal data remains private and accessible only to the user. This serverless platform is built using HTML, CSS, and JavaScript. Access requires signing in with Google, and only Gmail accounts listed in the database rules can use the platform.
+
+Your feedback matters! Every suggestion helps us improve AIML StudyConnect and is taken seriously.

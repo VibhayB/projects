@@ -35,19 +35,22 @@ Service Bazaar is a comprehensive cross-platform mobile application developed us
 * **Provider Tools:** Providers have screens to manage incoming requests, update service status, and a detailed screen for viewing and purchasing supplies.
 
 ## Setup and Installation
-
-1.  **Frontend Setup (React Native/Expo):**
+1. **Navigate to the project root directory**
+   ```bash
+   cd code
+   ```
+3.  **Frontend Setup (React Native/Expo):**
     ```bash
     cd frontend
     npm install
     npx expo start
     ```
-2.  **Backend Setup (Node.js/Express):**
+4.  **Backend Setup (Node.js/Express):**
     ```bash
     cd backend
     node server.js
     ```
-3.  **Python Management Tools:**
+5.  **Python Management Tools:**
     ```bash
     # Run tools for administrator-level management
     python SupplyManager.py

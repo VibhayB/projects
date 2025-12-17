@@ -817,12 +817,20 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal('modal1')">&times;</span>
             <h3 class="text-2xl font-semibold mb-4">StudyConnect</h3>
-            <p class="text-gray-700 mb-4">A student-focused website for accessing course content, useful links, and tools like a CGPA calculator.</p>
+            <p class="text-gray-700 mb-4"><strong>AIML StudyConnect</strong> is a centralized, high-performance academic ecosystem designed to serve as a comprehensive hub for students in the AI & Machine Learning department. The platform focuses on streamlining the educational journey by integrating real-time academic resources, productivity tools, and interactive engagement modules into a single, unified interface.</p>
+            <p><strong>Key Features:</strong></p>
             <ul class="list-disc ml-6 text-gray-700 space-y-2">
-                <li>Built a student-focused website for classmates to access course content, useful links, and tools (e.g., CGPA calculator).</li>
-                <li>Developed frontend with HTML, CSS, JavaScript; integrated Firebase for data storage and GitHub Pages for hosting.</li>
-                <li>Implemented local storage for storing user preferences, and login with Gmail ID for student authentication.</li>
+                <li><strong>Cloud Infrastructure & Security: The platform utilizes Firebase for secure Google OAuth authentication, ensuring data access is restricted to authorized university emails. It integrates Firestore for live data synchronization and Firebase Storage for managing curriculum-specific assets and resources.</strong></li>
+                <li>Academic Analytics Suite: The system features a custom logic engine for university-specific CGPA/SGPA calculations. It includes a specialized attendance tracker that uses a predictive mathematical model to determine the exact number of classes a student must attend to reach the 75% threshold.</li>
+                <li>Resource Management & Persistence: To ensure speed and reliability, the platform implements heavy use of localStorage to persist user data and specialized "Xebia Content" curriculum files. It also manages a dynamic directory for official university forms, software installers, and social "Clan" links.</li>
+                <li>Productivity & Game Engine: The project includes a custom-coded Pomodoro timer with a point-based reward system to promote focused study sessions. Additionally, it features a suite of HTML5 games—including Snake, 2048, and a Breakout-style "Ball Balancer"—built using the Canvas API and complex collision detection algorithms.</li>
+                <li>Interactive Interface: Designed with a modern CSS framework, the portal features a glassmorphic sidebar, a multi-slide informational banner, and an SPA-style tab system for seamless navigation.</li>
             </ul>
+
+
+
+
+
         </div>
     </div>
 
@@ -830,9 +838,8 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal('modal2')">&times;</span>
             <h3 class="text-2xl font-semibold mb-4">Service Bazaar</h3>
-            <p class="text-gray-700 mb-4">A prototype mobile app connecting users with local service providers.</p>
+            <p class="text-gray-700 mb-4"><strong>Service Bazaar:</strong> End-to-End, Multi-Functional Service Marketplace and Supply Chain Platform</p>
             <ul class="list-disc ml-6 text-gray-700 space-y-2">
-                <li>Service Bazaar: End-to-End, Multi-Functional Service Marketplace and Supply Chain Platform</li>
                 <li>Service Bazaar is a full-stack, two-sided marketplace application built to streamline local service booking and integrate the sale of related supplies. The entire platform operates on a React Native mobile client communicating with a Node.js/Express API layer. All structured and transactional data—including users, bookings, inventory, and chat history—is managed efficiently using a highly scalable and flexible Firebase NoSQL database.</li>
                 <li>Advanced Location-Driven Service Discovery: The platform's core booking intelligence is driven by user location. It utilizes Expo Location to obtain user coordinates, followed by a Nominatim reverse geocoding approach to provide human-readable location names (locationDisplayName). The ProvidersScreen implements filtering and sorting based on proximity to the user's selected location, which is manageable via an interactive WebView map interface.</li>
                 <li>Complex Booking Logic and Lifecycle Management: A tightly validated, multi-step booking process (BookingModal.js) that dynamically checks a provider’s real-time schedule, ensuring the user’s selected date, time, and custom duration are non-conflicting. Service integrity is enforced through an OTP-based confirmation protocol on the BookingScreen.js, which is mandatory for the service state to transition to double confirmed. Post-service completion triggers a mandatory rating and review modal to maintain service quality and update provider statistics.</li>

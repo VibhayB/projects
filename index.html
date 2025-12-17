@@ -893,11 +893,31 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal('modal4')">&times;</span>
             <h3 class="text-2xl font-semibold mb-4">Indian Sign Language Recognition</h3>
-            <p class="text-gray-700 mb-4"><strong>An interactive app for learning and translating Indian Sign Language from video inputs.</strong></p>
+            <p class="text-gray-700 mb-4">This project involved building a comprehensive pipeline to bridge the communication gap for the hearing and speech-impaired. The system translates dynamic sign language gestures into text in real-time by processing sequential video data into geometric landmarks.</p>
+
+            
+            <p class="text-gray-700 mb-4"><strong>Technical Implementation:</strong></p>
+            
             <ul class="list-disc ml-6 text-gray-700 space-y-2">
-                <li>Designed an interactive app for learning and translating Indian Sign Language from video inputs.</li>
-                <li>Created the interface in React Native and deployed to mobile devices using Expo Go.</li>
-                <li>Built a hybrid CNN + LSTM model to classify sign language gestures accurately.</li>
+            <p class="text-gray-700 mb-4">Data Acquisition & Feature Extraction:</p>
+            <li>Designed a preprocessing pipeline that converts raw video frames into standardized 3D coordinate arrays using <strong>MediaPipe.</strong></li>
+            <li>Focused on holistic landmarks, including 33 pose points, 21 hand points per hand, and facial keypoints to capture the full nuance of sign language.</li>
+            
+            <p class="text-gray-700 mb-4">Architecture Exploration:</p>
+            <li><strong>PyTorch/Keras LSTMs:</strong> Developed multi-layered Long Short-Term Memory networks to handle temporal dependencies in gestures.</li>
+            <li><strong>GRU Implementation:</strong> Optimized training time and computational efficiency by deploying Gated Recurrent Units, achieving comparable accuracy to LSTMs with fewer parameters.</li>
+            <li><strong>MobileNetV2 Hybrid:</strong> Integrated a pre-trained <strong>MobileNetV2</strong> base for spatial feature extraction combined with an LSTM head for temporal classification.</li>
+                
+            <p class="text-gray-700 mb-4">Deployment & Real-time Processing:</p>
+            <li>Architected a <strong>Flask-based server</strong> to serve as the inference engine.</li>
+            <li>The server receives video inputs, extracts landmarks on the fly, applies <strong>StandardScaler</strong> for normalization, and uses a saved model (e.g., Greetinglof20.9361.h5) to predict signs like "good morning," "hello," and "how are you".</li>
+            </ul>
+
+
+            <p class="text-gray-700 mb-4"><strong>Key Achievements:</strong></p>
+            <ul class="list-disc ml-6 text-gray-700 space-y-2">
+            <li>Successfully handled variable-length video sequences through pad_sequences for uniform model input.</li>
+            <li>Visualized training progress through accuracy and loss curves to debug overfitting, utilizing <strong>Matplotlib</strong> and <strong>Seaborn</strong>.</li>
             </ul>
         </div>
     </div>

@@ -1,7 +1,7 @@
 # Service Bazaar - Cross-Platform Service Marketplace
 
 ## Overview
-Service Bazaar is a comprehensive cross-platform mobile application developed using React Native, designed to connect users with service providers (workers) for various services and to manage supply purchases. The platform includes real-time booking, location-based provider filtering, a secure payment gateway, and a full e-commerce module for supplies.
+Service Bazaar is a comprehensive cross-platform mobile application developed using React Native, designed to connect users with service providers (workers) for various services and to manage supply purchases. The platform includes real-time booking, location-based provider filtering, and a full e-commerce module for supplies.
 
 ## Technology Stack
 

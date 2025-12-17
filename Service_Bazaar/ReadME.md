@@ -27,12 +27,12 @@ Service Bazaar is a comprehensive cross-platform mobile application developed us
 
 ### 3. E-commerce & Supplies Module
 * **Cart Management:** Local persistence of cart items (`AsyncStorage`) with quantity controls and dynamic totals.
-* **Checkout:** Handles order placement with support for Cash on Delivery (COD) and Online Payment (Razorpay), including GST calculation.
+* **Checkout:** Handles order placement with support for Cash on Delivery (COD), including GST calculation.
 * **Order History:** Users can track the status of their product orders and submit product ratings after delivery.
 
 ### 4. User & Provider Roles
-* **Dual Role Support:** A single user can operate in client mode (booking services, ordering supplies) or provider mode (managing requests, viewing stats).
-* **Provider Tools:** Providers have screens to manage incoming requests, update service status, and view application data.
+* **Dual Role Support:** A single user can operate in customer mode (booking services, asking queries) or provider mode (managing requests, viewing stats, ordering supplies).
+* **Provider Tools:** Providers have screens to manage incoming requests, update service status, and a detailed screen for viewing and purchasing supplies.
 
 ## Setup and Installation
 

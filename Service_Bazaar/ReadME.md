@@ -11,7 +11,7 @@ Service Bazaar is a comprehensive cross-platform mobile application developed us
 | **Frontend Libraries** | React Navigation, React Native WebView, Expo AV | Navigation, map integration, and audio handling. |
 | **Backend API** | **Node.js, Express.js** | Robust, scalable API server handling business logic. |
 | **Real-time** | **Socket.IO** | Enables instant, bi-directional chat between users and providers. |
-| **Database** | PostgreSQL (Implied by server logic) | Data persistence for users, providers, bookings, and inventory. |
+| **Database** | Firebase | Data persistence for users, providers, bookings, and inventory. |
 | **Geolocation** | Expo Location, Nominatim (OpenStreetMap) | User location fetching, reverse geocoding, and provider filtering. |
 | **Payments** | Razorpay (Client-side integration) | Online payment gateway integration. |
 | **Management** | Python | Used for internal tools like data backup and supply inventory management. |

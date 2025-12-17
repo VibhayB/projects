@@ -13,7 +13,6 @@ Service Bazaar is a comprehensive cross-platform mobile application developed us
 | **Real-time** | **Socket.IO** | Enables instant, bi-directional chat between users and providers. |
 | **Database** | Firebase | Data persistence for users, providers, bookings, and inventory. |
 | **Geolocation** | Expo Location, Nominatim (OpenStreetMap) | User location fetching, reverse geocoding, and provider filtering. |
-| **Payments** | Razorpay (Client-side integration) | Online payment gateway integration. |
 | **Management** | Python | Used for internal tools like data backup and supply inventory management. |
 
 ## Key Features

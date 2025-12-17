@@ -36,25 +36,18 @@ Service Bazaar is a comprehensive cross-platform mobile application developed us
 
 ## Setup and Installation
 
-1.  **Clone the Repository:**
+1.  **Frontend Setup (React Native/Expo):**
     ```bash
-    git clone [repository-url]
-    cd service-bazaar
-    ```
-2.  **Frontend Setup (React Native/Expo):**
-    ```bash
-    cd [Client Directory]
+    cd frontend
     npm install
     npx expo start
     ```
-3.  **Backend Setup (Node.js/Express):**
+2.  **Backend Setup (Node.js/Express):**
     ```bash
-    cd [Server Directory]
-    npm install
-    # Set up environment variables
+    cd backend
     node server.js
     ```
-4.  **Python Management Tools:**
+3.  **Python Management Tools:**
     ```bash
     # Run tools for administrator-level management
     python SupplyManager.py

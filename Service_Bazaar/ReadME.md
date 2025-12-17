@@ -51,11 +51,13 @@ Service Bazaar is a comprehensive cross-platform mobile application developed us
     ```bash
     cd [Server Directory]
     npm install
-    # Set up environment variables for PostgreSQL, Razorpay, etc.
+    # Set up environment variables
     node server.js
     ```
 4.  **Python Management Tools:**
     ```bash
-    # Run the supply manager (e.g., cron job or initial setup)
+    # Run tools for administrator-level management
     python SupplyManager.py
+    python "applications viewer.py"
+    python "backup data.py"
     ```

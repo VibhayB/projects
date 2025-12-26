@@ -259,21 +259,38 @@
             display: none; /* Chrome, Safari, Edge */
         }
         
-        .cert-card {
-            flex: 0 0 auto;
-            width: 300px;
-            margin-right: 1.5rem;
-            scroll-snap-align: start;
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .cert-card:last-child {
-            margin-right: 0;
-        }
-        
+        /* Add to existing CSS in the <style> section */
+.cert-card {
+    flex: 0 0 auto;
+    width: 320px;
+    margin-right: 1.5rem;
+    scroll-snap-align: start;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 4px solid;
+}
+
+.cert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* NPTEL cards */
+.cert-card:nth-child(1),
+.cert-card:nth-child(2),
+.cert-card:nth-child(3),
+.cert-card:nth-child(4) {
+    border-top-color: #3b82f6; /* Blue for NPTEL */
+}
+
+/* CodingNinjas cards */
+.cert-card:nth-child(5),
+.cert-card:nth-child(6) {
+    border-top-color: #8b5cf6; /* Purple for CodingNinjas */
+}
         /* Skills - Tag Cloud */
         .skills-cloud {
             display: flex;
@@ -686,49 +703,126 @@
         </div>
     </section>
 
-    <!-- Certifications Section -->
+        <!-- Certifications Section -->
     <section id="certifications">
         <div class="container mx-auto">
             <h2 class="section-heading text-green-700" data-aos="fade-up">Certifications</h2>
-            <div class="certifications-scroller">
-                
-                <div class="cert-card" data-aos="zoom-in">
-                    <h3 class="text-xl font-semibold mb-4">NPTEL Certifications</h3>
-                    <ul class="space-y-3">
-                        <li class="text-gray-700">
-                            <div class="font-medium">The Joy of Computing Using Python</div>
-                            <div class="text-sm">Scored 98% | <strong>Top 1% (Rank: 54/21,826)</strong></div>
-                        </li>
-                        <li class="text-gray-700">
-                            <div class="font-medium">Programming with Generative AI</div>
-                            <div class="text-sm">Scored 78% | <strong>Top 1% (Rank: 105/11,310)</strong></div>
-                        </li>
-                        <li class="text-gray-700">
-                            <div class="font-medium">Innovation, Business Models and Entrepreneurship</div>
-                            <div class="text-sm">Scored 73% | <strong>Top 3% (Rank: 126/4,364)</strong></div>
-                        </li>
-                        <li class="text-gray-700">
-                            <div class="font-medium">Programming in Modern C++</div>
-                            <div class="text-sm">Scored 66% </div>
-                        </li>
-                    </ul>
-                </div>
+            
+            <!-- NPTEL Certifications Group -->
+            <div class="mb-12" data-aos="fade-up">
+                <h3 class="text-2xl font-semibold mb-6 text-center text-blue-700">NPTEL Certifications</h3>
+                <div class="certifications-scroller">
+                    
+                    <div class="cert-card" data-aos="zoom-in">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-lg font-bold text-gray-800">The Joy of Computing Using Python</h4>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">NPTEL</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3"><i class="fas fa-calendar-alt mr-2"></i>Jul – Oct 2024</p>
+                        <div class="flex items-center mb-2">
+                            <span class="text-gray-700 font-medium">Score:</span>
+                            <span class="ml-2 text-green-600 font-bold">98%</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-700 font-medium">Rank:</span>
+                            <span class="ml-2 bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded">Top 1%</span>
+                            <span class="ml-2 text-gray-600 text-sm">(54/21,826)</span>
+                        </div>
+                    </div>
     
-                <div class="cert-card" data-aos="zoom-in" data-aos-delay="100">
-                    <h3 class="text-xl font-semibold mb-4">CodingNinjas Certifications</h3>
-                    <ul class="space-y-3">
-                        <li class="text-gray-700">
-                            <div class="font-medium">Introduction to Java</div>
-                            <div class="text-sm">Certification of Excellence</div>
-                        </li>
-                        <li class="text-gray-700">
-                            <div class="font-medium">Data Structures in Java</div>
-                            <div class="text-sm">Certification of Excellence</div>
-                        </li>
-                    </ul>
-                </div>
+                    <div class="cert-card" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-lg font-bold text-gray-800">Programming with Generative AI</h4>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">NPTEL</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3"><i class="fas fa-calendar-alt mr-2"></i>Aug – Oct 2025</p>
+                        <div class="flex items-center mb-2">
+                            <span class="text-gray-700 font-medium">Score:</span>
+                            <span class="ml-2 text-green-600 font-bold">78%</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-700 font-medium">Rank:</span>
+                            <span class="ml-2 bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded">Top 1%</span>
+                            <span class="ml-2 text-gray-600 text-sm">(105/11,310)</span>
+                        </div>
+                    </div>
     
+                    <div class="cert-card" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-lg font-bold text-gray-800">Innovation, Business Models & Entrepreneurship</h4>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">NPTEL</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3"><i class="fas fa-calendar-alt mr-2"></i>Aug – Oct 2024</p>
+                        <div class="flex items-center mb-2">
+                            <span class="text-gray-700 font-medium">Score:</span>
+                            <span class="ml-2 text-green-600 font-bold">73%</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-700 font-medium">Rank:</span>
+                            <span class="ml-2 bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded">Top 3%</span>
+                            <span class="ml-2 text-gray-600 text-sm">(126/4,364)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="cert-card" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-lg font-bold text-gray-800">Programming in Modern C++</h4>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">NPTEL</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3"><i class="fas fa-calendar-alt mr-2"></i>Jan – Apr 2025</p>
+                        <div class="flex items-center mb-2">
+                            <span class="text-gray-700 font-medium">Score:</span>
+                            <span class="ml-2 text-green-600 font-bold">66%</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-700 font-medium">Status:</span>
+                            <span class="ml-2 bg-gray-100 text-gray-800 text-xs font-semibold px-2 py-1 rounded">Completed</span>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
+            
+            <!-- CodingNinjas Certifications Group -->
+            <div data-aos="fade-up" data-aos-delay="200">
+                <h3 class="text-2xl font-semibold mb-6 text-center text-purple-700">CodingNinjas Certifications</h3>
+                <div class="certifications-scroller">
+                    
+                    <div class="cert-card" data-aos="zoom-in">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-lg font-bold text-gray-800">Introduction to Java</h4>
+                            <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">CodingNinjas</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3"><i class="fas fa-calendar-alt mr-2"></i>Jun 2024 – Jun 2025</p>
+                        <div class="flex items-center mb-4">
+                            <span class="text-gray-700 font-medium">Type:</span>
+                            <span class="ml-2 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">Certification of Excellence</span>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-award text-2xl text-yellow-500 mb-2"></i>
+                            <p class="text-sm text-gray-600">Complete Java Fundamentals</p>
+                        </div>
+                    </div>
+    
+                    <div class="cert-card" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-lg font-bold text-gray-800">Data Structures in Java</h4>
+                            <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">CodingNinjas</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3"><i class="fas fa-calendar-alt mr-2"></i>Jun 2024 – Jun 2025</p>
+                        <div class="flex items-center mb-4">
+                            <span class="text-gray-700 font-medium">Type:</span>
+                            <span class="ml-2 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">Certification of Excellence</span>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-award text-2xl text-yellow-500 mb-2"></i>
+                            <p class="text-sm text-gray-600">Advanced Data Structures & Algorithms</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
         </div>
     </section>
 
